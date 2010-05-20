@@ -1,4 +1,4 @@
-module Epp
+module EPP
   class ServerError < RuntimeError; end
   class Server
     DEFAULT_SERVICES = %w(urn:ietf:params:xml:ns:domain-1.0

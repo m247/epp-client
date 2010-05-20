@@ -1,4 +1,4 @@
-module Epp
+module EPP
   class Request
     # initialize(command, payload, transaction_id)
     # initialize(command, transaction_id) {|xml| payload }

@@ -1,4 +1,4 @@
-module Epp
+module EPP
   class OldServer < Server
     # override function to make it respond in old type way
     def send_frame(xml)

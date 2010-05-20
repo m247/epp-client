@@ -1,4 +1,4 @@
-module Epp
+module EPP
   class Client
     def initialize(tag, passwd, host, options = {})
       @conn = if options.delete(:compatibility) == true

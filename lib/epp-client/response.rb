@@ -1,4 +1,4 @@
-module Epp
+module EPP
   class Response
     def initialize(xml_string)
       @xml = XML::Parser.string(xml_string).parse

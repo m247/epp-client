@@ -1,4 +1,4 @@
-module Epp
+module EPP
   class ResponseError < RuntimeError
     attr_accessor :code, :xml
     def initialize(code, msg, xml)
