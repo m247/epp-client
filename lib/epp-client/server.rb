@@ -12,6 +12,12 @@ module EPP
       @options = DEFAULTS.merge(options)
     end
 
+    def hello
+      send_frame(HelloRequest.new.to_s)
+      return true if recv_frame =~ /<greeting>/
+      false
+    end
+
     def request(command, payload = nil, &block)
       req = if payload.nil? && block_given?
         Request.new(command, next_tid, &block)

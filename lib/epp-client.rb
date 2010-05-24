@@ -9,4 +9,5 @@ module EPP
   autoload :Request, File.dirname(__FILE__) + '/epp-client/request.rb'
   autoload :Response, File.dirname(__FILE__) + '/epp-client/response.rb'
   autoload :ResponseError, File.dirname(__FILE__) + '/epp-client/response_error.rb'
+  autoload :HelloRequest, File.dirname(__FILE__) + '/epp-client/hello_request.rb'
 end
