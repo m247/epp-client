@@ -89,13 +89,13 @@ module EPP
         response = send_recv_frame(login_request.to_s)
 
         return true if response.code == 1000
-        raise ResponseError.new(response.code, response.message, response.xml)
+        raise ResponseError.new(response.code, response.message, response.to_xml)
       end
       def logout!
         response = send_recv_frame(logout_request.to_s)
 
         return true if response.code == 1500
-        raise ResponseError.new(response.code, response.message, response.xml)
+        raise ResponseError.new(response.code, response.message, response.to_xml)
       end
       def send_recv_frame(xml)
         send_frame(xml)
