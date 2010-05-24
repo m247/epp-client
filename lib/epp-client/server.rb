@@ -115,7 +115,7 @@ module EPP
           len = header.unpack('N')[0]
           
           raise ServerError, "Bad frame header from server, should be greater than #{HEADER_LEN}" unless len > HEADER_LEN
-          response = @sock.read(length - HEADER_LEN)
+          response = @sock.read(len - HEADER_LEN)
         end
       end
   end
