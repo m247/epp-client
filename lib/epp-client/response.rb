@@ -16,7 +16,11 @@ module EPP
       @message ||= result.find('e:msg/text()').first.content.strip
     end
     def data
-      @data ||= @xml.find('/e:epp/e:response/e:resData/node()')[1]
+      unless @data
+        list = @xml.find('/e:epp/e:response/e:resData/node()').reject(&:empty?)
+        @data = list.count > 1 ? list : list[0]
+      end
+      @data
     end
     def msgQ
       @msgQ ||= @xml.find('/e:epp/e:response/e:msgQ').first
