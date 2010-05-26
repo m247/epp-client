@@ -17,8 +17,8 @@ module EPP
     end
     def data
       unless @data
-        list = @xml.find('/e:epp/e:response/e:resData/node()').reject(&:empty?)
-        @data = list.count > 1 ? list : list[0]
+        list = @xml.find('/e:epp/e:response/e:resData/node()').reject{|n| n.empty?}
+        @data = list.size > 1 ? list : list[0]
       end
       @data
     end
