@@ -1,20 +1,34 @@
 module EPP
+  # An EPP XML Response
   class Response
+    # Creates an instance of an EPP::Response
+    #
+    # @param [String] xml_string XML Response
     def initialize(xml_string)
       @xml = XML::Parser.string(xml_string).parse
       @xml.root.namespaces.default_prefix = 'e'
     end
 
+    # Indicates if the response is successful.
+    # @return [Boolean] if the response is successful
     def success?
       code == 1000
     end
 
+    # Response code
+    # @return [Integer] response code
     def code
       @code ||= result['code'].to_i
     end
+
+    # Response message
+    # @return [String] response message
     def message
       @message ||= result.find('e:msg/text()').first.content.strip
     end
+
+    # Response data
+    # @return [String] response data
     def data
       unless @data
         list = @xml.find('/e:epp/e:response/e:resData/node()').reject{|n| n.empty?}
@@ -22,18 +36,26 @@ module EPP
       end
       @data
     end
+
+    # Response Message Queue
+    # @return [XML::Node] message queue
     def msgQ
       @msgQ ||= @xml.find('/e:epp/e:response/e:msgQ').first
     end
 
+    # @see Object#inspect
     def inspect
       @xml.inspect
     end
+
+    # Returns a the formatted response XML
+    # @return [String] formatted XML response
     def to_xml
       @xml.to_s(:indent => true)
     end
 
     private
+      # @return [XML::Node] Result node
       def result
         @result ||= @xml.find('/e:epp/e:response/e:result').first
       end

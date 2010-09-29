@@ -2,6 +2,7 @@ require 'openssl'
 require 'socket'
 require 'xml'
 
+# EPP Module
 module EPP
   autoload :Client, File.dirname(__FILE__) + '/epp-client/client.rb'
   autoload :Server, File.dirname(__FILE__) + '/epp-client/server.rb'
