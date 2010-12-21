@@ -8,8 +8,8 @@ module EPP
       @code, @xml = code, xml
     end
     # @return [String] Formatted Response error
-    def to_s
-      "#{message} (code #{code})"
+    def message
+      "#{to_s} (code #{code})"
     end
   end
 end
