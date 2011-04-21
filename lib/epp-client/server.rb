@@ -53,13 +53,13 @@ module EPP
     #     for the payload to be added into
     # @return [Response] EPP Response object
     def request(command, payload = nil, &block)
-      req = if payload.nil? && block_given?
+      @req = if payload.nil? && block_given?
         Request.new(command, next_tid, &block)
       else
         Request.new(command, payload, next_tid)
       end
 
-      send_recv_frame(req.to_s)
+      @resp = send_recv_frame(@req.to_s)
     end
 
     # Runs a block while logged into the receiver
