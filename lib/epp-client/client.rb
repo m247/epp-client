@@ -19,6 +19,20 @@ module EPP
       end
     end
 
+    # Returns the last request sent to the EPP server
+    #
+    # @return [Request] last request sent to the EPP server
+    def _last_request
+      @conn.last_request
+    end
+
+    # Returns the last response received from the EPP server
+    #
+    # @return [Request] last response received from the EPP server
+    def _last_response
+      @conn.last_response
+    end
+
     # Send hello command
     def hello
       @conn.connection do

@@ -62,6 +62,19 @@ module EPP
       @resp = send_recv_frame(@req.to_s)
     end
 
+    # Return the Request object created by the last call to #request
+    #
+    # @return [Request] Last created EPP Request object
+    def last_request
+      @req
+    end
+    # Return the Response object created by the last call to #request
+    #
+    # @return [Response] Last created EPP Response object
+    def last_response
+      @resp
+    end
+
     # Runs a block while logged into the receiver
     #
     # @yield logged in EPP server session
