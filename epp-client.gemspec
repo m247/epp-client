@@ -6,7 +6,7 @@ Gem::Specification.new do |gem|
   gem.email         = ["geoff@geoffgarside.co.uk"]
   gem.description   = %q{Client for communicating with EPP services}
   gem.summary       = %q{EPP (Extensible Provisioning Protocol) Client}
-  gem.homepage      = "https://github.com/geoffgarside/epp-client"
+  gem.homepage      = "https://github.com/m247/epp-client"
 
   gem.files         = `git ls-files`.split($\)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
