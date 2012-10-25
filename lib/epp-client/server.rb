@@ -5,14 +5,32 @@ module EPP
   # Handles sending and receiving data to EPP servers.
   # Supports new style EPP servers which include length of payloads in transmission.
   class Server
+    # @!attribute DEFAULT_SERVICES
+    # Provided for legacy clients who might be using it.
+    # The constant has been moved into the EPP::Client class which
+    # is the primary client facing API.
+    #
+    # @deprecated please use EPP::Client::DEFAULT_SERVICES
+    # @see EPP::Client::DEFAULT_SERVICES
 
-    # Default Service URNs
-    DEFAULT_SERVICES = %w(urn:ietf:params:xml:ns:domain-1.0
-      urn:ietf:params:xml:ns:contact-1.0 urn:ietf:params:xml:ns:host-1.0)
+    # Handles emitting warnings for deprecated constants.
+    #
+    # @private
+    # @param [Symbol] const_name Name of the missing constant
+    # @see Module.const_missing
+    def self.const_missing(const_name)
+      case const_name
+      when :DEFAULT_SERVICES
+        warn "EPP::Server::DEFAULT_SERVICES has been deprecated, please use EPP::Client::DEFAULT_SERVICES"
+        EPP::Client::DEFAULT_SERVICES
+      else
+        super
+      end
+    end
 
     # Default connection options
     DEFAULTS = { :port => 700, :compatibility => false, :lang => 'en', :version => '1.0',
-      :extensions => [], :services => DEFAULT_SERVICES }
+      :extensions => [], :services => EPP::Client::DEFAULT_SERVICES }
 
     # Receive frame header length
     # @private

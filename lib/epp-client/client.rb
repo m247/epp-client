@@ -4,6 +4,19 @@ module EPP
   # Establishes a connection to an EPP server and allows for sending commands
   # to that EPP server.
   class Client
+    # Default Service URNs
+    #
+    # Provided to make it easier for clients to add additional services to
+    # the default list.
+    #
+    # @example
+    #   services = DEFAULT_SERVICES + %w(urn:ietf:params:xml:ns:secDNS-1.1)
+    #   EPP::Client.new('username','password','epp.example.com', :services => services)
+    DEFAULT_SERVICES = %w(
+      urn:ietf:params:xml:ns:domain-1.0
+      urn:ietf:params:xml:ns:contact-1.0
+      urn:ietf:params:xml:ns:host-1.0 )
+
     # Create new instance of EPP::Client.
     #
     # @param [String] tag EPP Tag
