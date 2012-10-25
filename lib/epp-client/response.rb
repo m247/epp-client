@@ -28,7 +28,7 @@ module EPP
     end
 
     # Response data
-    # @return [String] response data
+    # @return [XML::Node] response data
     def data
       unless @data
         list = @xml.find('/e:epp/e:response/e:resData/node()').reject{|n| n.empty?}
