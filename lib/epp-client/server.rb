@@ -166,7 +166,8 @@ module EPP
       # @return [Request] Login Request Payload
       def login_request
         Request.new('login', next_tid) do |login|
-          login << XML::Node.new('clID', @tag)
+          tag = @tag.length > 2 ? @tag : "##{@tag}"
+          login << XML::Node.new('clID', tag)
           login << XML::Node.new('pw', @passwd)
 
           options = XML::Node.new('options')
