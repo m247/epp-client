@@ -6,11 +6,11 @@ require File.expand_path('../epp-client/version', __FILE__)
 
 # EPP Module
 module EPP
-  autoload :Client, File.dirname(__FILE__) + '/epp-client/client.rb'
-  autoload :Server, File.dirname(__FILE__) + '/epp-client/server.rb'
-  autoload :OldServer, File.dirname(__FILE__) + '/epp-client/old_server.rb'
-  autoload :Request, File.dirname(__FILE__) + '/epp-client/request.rb'
-  autoload :Response, File.dirname(__FILE__) + '/epp-client/response.rb'
-  autoload :ResponseError, File.dirname(__FILE__) + '/epp-client/response_error.rb'
-  autoload :HelloRequest, File.dirname(__FILE__) + '/epp-client/hello_request.rb'
+  autoload :Client,         File.expand_path('../epp-client/client.rb',         __FILE__)
+  autoload :Server,         File.expand_path('../epp-client/server.rb',         __FILE__)
+  autoload :OldServer,      File.expand_path('../epp-client/old_server.rb',     __FILE__)
+  autoload :Request,        File.expand_path('../epp-client/request.rb',        __FILE__)
+  autoload :Response,       File.expand_path('../epp-client/response.rb',       __FILE__)
+  autoload :ResponseError,  File.expand_path('../epp-client/response_error.rb', __FILE__)
+  autoload :HelloRequest,   File.expand_path('../epp-client/hello_request.rb',  __FILE__)
 end
