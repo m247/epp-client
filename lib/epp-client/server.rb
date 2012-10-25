@@ -1,6 +1,15 @@
 module EPP
   # A server error
-  class ServerError < RuntimeError; end
+  class ServerError < Error; end
+
+  # A connection error
+  class ConnectionError < Error
+    attr_reader :inner_error
+    def initialize(message, inner_error)
+      super(message)
+      @inner_error = inner_error
+    end
+  end
 
   # Handles sending and receiving data to EPP servers.
   # Supports new style EPP servers which include length of payloads in transmission.
@@ -133,6 +142,13 @@ module EPP
         recv_frame  # Perform initial recv
 
         yield
+      rescue OpenSSL::SSL::SSLError => e
+        # Connection error, most likely the IP isn't in the allow list
+        if e.message =~ /returned=5 errno=0/
+          raise ConnectionError.new("SSL Connection error, your IP address might not be permitted to connect to #{@host}", e)
+        else
+          raise e
+        end
       ensure
         @sock.close
         @conn.close

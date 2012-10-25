@@ -6,6 +6,9 @@ require File.expand_path('../epp-client/version', __FILE__)
 
 # EPP Module
 module EPP
+  # Generic error class for all EPP errors
+  class Error < RuntimeError; end
+
   autoload :Client,         File.expand_path('../epp-client/client.rb',         __FILE__)
   autoload :Server,         File.expand_path('../epp-client/server.rb',         __FILE__)
   autoload :OldServer,      File.expand_path('../epp-client/old_server.rb',     __FILE__)
