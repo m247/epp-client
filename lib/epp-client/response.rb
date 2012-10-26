@@ -43,6 +43,15 @@ module EPP
       @msgQ ||= @xml.find('/e:epp/e:response/e:msgQ').first
     end
 
+    # Response extension block
+    # @return [XML::Node] extension
+    def extension
+      @extension ||= begin
+        list = @xml.find('/e:epp/e:response/e:extension/node()').reject { |n| n.empty? }
+        list.size > 1 ? list : list[0]
+      end
+    end
+
     # @see Object#inspect
     def inspect
       @xml.inspect
