@@ -30,11 +30,10 @@ module EPP
     # Response data
     # @return [XML::Node] response data
     def data
-      unless @data
-        list = @xml.find('/e:epp/e:response/e:resData/node()').reject{|n| n.empty?}
-        @data = list.size > 1 ? list : list[0]
+      @data ||= begin
+        list = @xml.find('/e:epp/e:response/e:resData/node()').reject { |n| n.empty? }
+        list.size > 1 ? list : list[0]
       end
-      @data
     end
 
     # Response Message Queue
