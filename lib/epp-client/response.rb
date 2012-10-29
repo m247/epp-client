@@ -28,7 +28,7 @@ module EPP
     end
 
     # Response data
-    # @return [XML::Node] response data
+    # @return [XML::Node, Array<XML::Node>] response data
     def data
       @data ||= begin
         list = @xml.find('/e:epp/e:response/e:resData/node()').reject { |n| n.empty? }
@@ -43,7 +43,7 @@ module EPP
     end
 
     # Response extension block
-    # @return [XML::Node] extension
+    # @return [XML::Node, Array<XML::Node>] extension
     def extension
       @extension ||= begin
         list = @xml.find('/e:epp/e:response/e:extension/node()').reject { |n| n.empty? }
