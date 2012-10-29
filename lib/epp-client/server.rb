@@ -79,11 +79,11 @@ module EPP
     #   @yieldparam [XML::Node] xml XML Node of the command
     #     for the payload to be added into
     # @return [Response] EPP Response object
-    def request(command, payload = nil, &block)
+    def request(command, payload = nil, extension = nil, &block)
       @req = if payload.nil? && block_given?
         Request.new(command, next_tid, &block)
       else
-        Request.new(command, payload, next_tid)
+        Request.new(command, payload, extension, next_tid)
       end
 
       @resp = send_recv_frame(@req.to_s)

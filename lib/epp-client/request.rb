@@ -3,16 +3,17 @@ module EPP
   class Request
     # Create new instance of EPP::Request.
     #
-    # @overload initialize(command, payload, transaction_id)
+    # @overload initialize(command, payload, extension, transaction_id)
     #   @param [String, #to_s] command EPP Command to call
     #   @param [XML::Node, XML::Document, String] payload XML Payload to transmit
     #   @param [String] transaction_id EPP Transaction ID
-    # @overload initialize(command, transaction_id) {|xml| payload }
+    # @overload initialize(command, transaction_id) {|cmd, ext| payload }
     #   @param [String, #to_s] command EPP Command to call
     #   @param [String] transaction_id EPP Transaction ID
-    #   @yield [xml] block to construct payload
-    #   @yieldparam [XML::Node] xml XML Node of the command
+    #   @yield [cmd,ext] block to construct payload
+    #   @yieldparam [XML::Node] cmd XML Node of the command
     #     for the payload to be added into
+    #   @yieldparam [XML::Node] ext XML Node of the extension
     def initialize(command, *args, &block)
       @command = XML::Node.new(command)
 
@@ -20,16 +21,20 @@ module EPP
       cmd << @command
       xml.root << cmd
 
+      ext = XML::Node.new('extension')
+
       if block_given?
         tid, _ = args
         case block.arity
         when 1
           block.call(@command)
+        when 2
+          block.call(@command, ext)
         else
           @command << block.call
         end
       else
-        payload, tid = args
+        payload, extension, tid = args
         unless payload.nil?
           @command << case payload.class
             when XML::Node
@@ -41,7 +46,21 @@ module EPP
               xml.import(doc.root)
           end
         end
+
+        unless extension.nil?
+          ext << case extension.class
+            when XML::Node
+              extension
+            when XML::Document
+              xml.import(extension.root)
+            else
+              doc = XML::Parser.string(extension.to_s).parse
+              xml.import(doc.root)
+          end
+        end
       end
+
+      cmd << ext unless ext.empty?
 
       unless command == 'logout'
         cmd << XML::Node.new('clTRID', tid || 'ABC-12345')
