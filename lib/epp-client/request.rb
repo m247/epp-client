@@ -60,7 +60,7 @@ module EPP
         end
       end
 
-      cmd << ext unless ext.empty?
+      cmd << ext if ext.children?
 
       unless command == 'logout'
         cmd << XML::Node.new('clTRID', tid || 'ABC-12345')
