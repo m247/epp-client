@@ -51,6 +51,13 @@ module EPP
       @conn.last_response
     end
 
+    # Returns the last error received from a login or logout request
+    #
+    # @return [ResponseError] last error received from login/logout request
+    def _last_error
+      @conn.last_error
+    end
+
     # Send hello command
     def hello
       @conn.connection do
