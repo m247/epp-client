@@ -101,6 +101,12 @@ module EPP
     def last_response
       @resp
     end
+    # Return the error from the last login or logout request
+    #
+    # @return [ResponseError] last error from login or logout
+    def last_error
+      @error
+    end
 
     # Runs a block while logged into the receiver
     #
@@ -200,10 +206,11 @@ module EPP
       # @raise [ResponseError] login failed
       # @see login_request
       def login!
+        @error = nil
         response = send_recv_frame(login_request.to_s)
 
         return true if response.code == 1000
-        raise ResponseError.new(response.code, response.message, response.to_xml)
+        raise @error = ResponseError.new(response.code, response.message, response.to_xml)
       end
 
       # Perform logout
@@ -215,7 +222,7 @@ module EPP
         response = send_recv_frame(logout_request.to_s)
 
         return true if response.code == 1500
-        raise ResponseError.new(response.code, response.message, response.to_xml)
+        raise @error = ResponseError.new(response.code, response.message, response.to_xml)
       end
 
       # Send a frame and receive its response
