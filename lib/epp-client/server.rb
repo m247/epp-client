@@ -4,10 +4,12 @@ module EPP
 
   # A connection error
   class ConnectionError < Error
-    attr_reader :inner_error
-    def initialize(message, inner_error)
+    attr_reader :error, :addr, :peeraddr
+    def initialize(message, addr, peeraddr, error)
       super(message)
-      @inner_error = inner_error
+      @error = error
+      @addr = addr
+      @peeraddr = peeraddr
     end
   end
 
@@ -151,7 +153,8 @@ module EPP
       rescue OpenSSL::SSL::SSLError => e
         # Connection error, most likely the IP isn't in the allow list
         if e.message =~ /returned=5 errno=0/
-          raise ConnectionError.new("SSL Connection error, your IP address might not be permitted to connect to #{@host}", e)
+          raise ConnectionError.new("SSL Connection error, IP may not be permitted to connect to #{@host}",
+             @conn.addr, @conn.peeraddr, e)
         else
           raise e
         end
