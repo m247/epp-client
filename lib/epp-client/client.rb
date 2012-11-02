@@ -29,6 +29,7 @@ module EPP
     # @option options [String] :version EPP protocol version, default '1.0'
     # @option options [Array<String>] :extensions EPP Extension URNs
     # @option options [Array<String>] :services EPP Service URNs
+    # @option options [String] :source_addr Source address to connect from
     def initialize(tag, passwd, host, options = {})
       @conn = if options.delete(:compatibility) == true
         OldServer.new(tag, passwd, host, options)

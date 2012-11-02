@@ -41,7 +41,7 @@ module EPP
 
     # Default connection options
     DEFAULTS = { :port => 700, :compatibility => false, :lang => 'en', :version => '1.0',
-      :extensions => [], :services => EPP::Client::DEFAULT_SERVICES }
+      :extensions => [], :services => EPP::Client::DEFAULT_SERVICES, :source_addr => nil }
 
     # Receive frame header length
     # @private
@@ -141,7 +141,7 @@ module EPP
     #     end
     #   end
     def connection
-      @conn = TCPSocket.new(@host, @options[:port])
+      @conn = TCPSocket.new(@host, @options[:port], @options[:source_addr])
       @sock = OpenSSL::SSL::SSLSocket.new(@conn)
       @sock.sync_close
 
