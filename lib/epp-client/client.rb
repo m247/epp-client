@@ -29,7 +29,9 @@ module EPP
     # @option options [String] :version EPP protocol version, default '1.0'
     # @option options [Array<String>] :extensions EPP Extension URNs
     # @option options [Array<String>] :services EPP Service URNs
-    # @option options [String] :source_addr Source address to connect from
+    # @option options [String] :address_family 'AF_INET' or 'AF_INET6' or either of the
+    #                          appropriate socket constants. Will cause connections to be
+    #                          limited to this address family. Default try all addresses.
     def initialize(tag, passwd, host, options = {})
       @conn = if options.delete(:compatibility) == true
         OldServer.new(tag, passwd, host, options)

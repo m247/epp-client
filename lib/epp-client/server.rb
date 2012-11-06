@@ -41,7 +41,7 @@ module EPP
 
     # Default connection options
     DEFAULTS = { :port => 700, :compatibility => false, :lang => 'en', :version => '1.0',
-      :extensions => [], :services => EPP::Client::DEFAULT_SERVICES, :source_addr => nil }
+      :extensions => [], :services => EPP::Client::DEFAULT_SERVICES, :address_family => nil }
 
     # Receive frame header length
     # @private
@@ -57,9 +57,15 @@ module EPP
     # @option options [String] :version EPP protocol version, default '1.0'
     # @option options [Array<String>] :extensions EPP Extension URNs
     # @option options [Array<String>] :services EPP Service URNs
+    # @option options [String] :address_family 'AF_INET' or 'AF_INET6' or either of the
+    #                          appropriate socket constants. Will cause connections to be
+    #                          limited to this address family. Default try all addresses.
     def initialize(tag, passwd, host, options = {})
       @tag, @passwd, @host = tag, passwd, host
       @options = DEFAULTS.merge(options)
+
+      @addrinfo = resolve_addrinfo
+      raise "Unable to resolve #{@host}" if @addrinfo.empty?
     end
 
     # Sends a Hello Request to the server
@@ -141,30 +147,54 @@ module EPP
     #     end
     #   end
     def connection
-      @conn = TCPSocket.new(@host, @options[:port], @options[:source_addr])
-      @sock = OpenSSL::SSL::SSLSocket.new(@conn)
-      @sock.sync_close
+      @connection_errors = []
+      @addrinfo.each do |_,port,_,addr|
+        @conn = TCPSocket.new(addr, port)
+        @sock = OpenSSL::SSL::SSLSocket.new(@conn)
+        @sock.sync_close
 
-      begin
-        @sock.connect
-        recv_frame  # Perform initial recv
+        begin
+          @sock.connect
+          recv_frame  # Perform initial recv
 
-        yield
-      rescue OpenSSL::SSL::SSLError => e
-        # Connection error, most likely the IP isn't in the allow list
-        if e.message =~ /returned=5 errno=0/
-          raise ConnectionError.new("SSL Connection error, IP may not be permitted to connect to #{@host}",
-             @conn.addr, @conn.peeraddr, e)
-        else
-          raise e
+          return yield
+        rescue Errno::ECONNREFUSED, Errno::ECONNRESET, Errno::EHOSTUNREACH => e
+          @connection_errors << e
+          next # try the next address in the list
+        rescue OpenSSL::SSL::SSLError => e
+          # Connection error, most likely the IP isn't in the allow list
+          if e.message =~ /returned=5 errno=0/
+            raise ConnectionError.new("SSL Connection error, IP may not be permitted to connect to #{@host}",
+               @conn.addr, @conn.peeraddr, e)
+          else
+            raise e
+          end
+        ensure
+          @sock.close
+          @conn.close
+          conn = sock = nil
         end
-      ensure
-        @sock.close
-        @conn.close
-        conn = sock = nil
       end
+
+      # Update our addrinfo in case the DNS has changed
+      new_addrinfo = resolve_addrinfo
+      if !new_addrinfo.empty? && @addrinfo != new_addrinfo
+        @addrinfo = new_addrinfo
+      end
+
+      raise @connection_errors.last unless @connection_errors.empty?
+      raise Errno::EHOSTUNREACH, "Failed to connect to host #{@host}"
     end
     private
+      def resolve_addrinfo
+        family = case @options[:address_family]
+        when 'AF_INET',  Socket::AF_INET  then Socket::AF_INET
+        when 'AF_INET6', Socket::AF_INET6 then Socket::AF_INET6
+        else nil end
+
+        Socket.getaddrinfo(@host, @options[:port], family, Socket::SOCK_STREAM)
+      end
+
       # @return [String] next transaction id
       def next_tid
         @tid ||= 0
