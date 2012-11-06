@@ -27,6 +27,18 @@ module EPP
       @message ||= result.find('e:msg/text()').first.content.strip
     end
 
+    # Descriptive Error Information
+    # @return [XML::Node] error information
+    def error_value
+      @error_value ||= result.find('e:extValue/e:value/node()').first
+    end
+
+    # Error reason
+    # @return [String] error reason
+    def error_reason
+      @error_reason ||= result.find('e:extValue/e:reason/text()').first.content.strip
+    end
+
     # Response data
     # @return [XML::Node, Array<XML::Node>] response data
     def data
