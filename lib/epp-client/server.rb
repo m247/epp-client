@@ -164,8 +164,9 @@ module EPP
         rescue OpenSSL::SSL::SSLError => e
           # Connection error, most likely the IP isn't in the allow list
           if e.message =~ /returned=5 errno=0/
-            raise ConnectionError.new("SSL Connection error, IP may not be permitted to connect to #{@host}",
+            @connection_errors << ConnectionError.new("SSL Connection error, IP may not be permitted to connect to #{@host}",
                @conn.addr, @conn.peeraddr, e)
+            next
           else
             raise e
           end
