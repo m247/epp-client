@@ -157,7 +157,7 @@ module EPP
       @addrinfo.each do |_,port,_,addr|
         @conn = TCPSocket.new(addr, port)
         @sock = OpenSSL::SSL::SSLSocket.new(@conn)
-        @sock.sync_close
+        @sock.sync_close = true
 
         begin
           @sock.connect
