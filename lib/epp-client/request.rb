@@ -1,6 +1,23 @@
 module EPP
   # An EPP XML Request
   class Request
+    @@validation_enabled = false
+    # Enables validation of the XML by disabling the inclusion of
+    # the `xsi:schemaLocation` which fails the EPP Schema validation.
+    #
+    # @note we can ditch this if we can work out how to get the EPP
+    # schema to validate with the `xsi:schemaLocation` included.
+    def self.enable_validation!
+      @@validation_enabled = true
+    end
+    # Returns whether `xsi:schemaLocation` should be included in the
+    # generated XML.
+    #
+    # @return [Boolean]
+    def self.validation_enabled?
+      @@validation_enabled
+    end
+
     # Create new instance of EPP::Request.
     #
     # @overload initialize(command, payload, extension, transaction_id)
@@ -104,12 +121,34 @@ module EPP
       def prepare_request
         xml = XML::Document.new('1.0')
         xml.root = XML::Node.new('epp')
-        xml.root.namespaces.namespace =
-          XML::Namespace.new(xml.root, nil, 'urn:ietf:params:xml:ns:epp-1.0')
-        XML::Namespace.new(xml.root, 'xsi', 'http://www.w3.org/2001/XMLSchema-instance')
-        xml.root['xsi:schemaLocation'] = "urn:ietf:params:xml:ns:epp-1.0 epp-1.0.xsd"
+        xml.root.namespaces.namespace = epp_namespace(xml.root, nil)
+
+        unless self.class.validation_enabled?
+          XML::Namespace.new(xml.root, 'xsi', 'http://www.w3.org/2001/XMLSchema-instance')
+          xml.root['xsi:schemaLocation'] = "urn:ietf:params:xml:ns:epp-1.0 epp-1.0.xsd"
+        end
 
         xml
+      end
+
+      # Creates and returns an instance of the EPP 1.0 namespace
+      #
+      # @param [XML::Node] node to create the namespace on
+      # @param [String, nil] Name to give the namespace
+      # @return [XML::Namespace] EPP 1.0 namespace
+      def epp_namespace(node, name = nil)
+        XML::Namespace.new(node, name, 'urn:ietf:params:xml:ns:epp-1.0')
+      end
+
+      # Creates and returns a new node in the EPP 1.0 namespace
+      #
+      # @param [String] name of the node to create
+      # @param [String,XML::Node,nil] value of the node
+      # @return [XML::Node]
+      def xml_node(name, value = nil)
+        node = XML::Node.new(name, value)
+        node.namespaces.namespace = epp_namespace(node)
+        node
       end
   end
 end

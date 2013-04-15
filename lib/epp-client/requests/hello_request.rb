@@ -3,7 +3,7 @@ module EPP
   class HelloRequest < Request
     # Create new HelloRequest instance
     def initialize(*ignored)
-      xml.root << XML::Node.new('hello')
+      xml.root << xml_node('hello')
     end
   end
 end
