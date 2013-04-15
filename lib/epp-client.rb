@@ -15,5 +15,6 @@ module EPP
   autoload :Request,        File.expand_path('../epp-client/request.rb',        __FILE__)
   autoload :Response,       File.expand_path('../epp-client/response.rb',       __FILE__)
   autoload :ResponseError,  File.expand_path('../epp-client/response_error.rb', __FILE__)
-  autoload :HelloRequest,   File.expand_path('../epp-client/hello_request.rb',  __FILE__)
+
+  autoload :HelloRequest,   File.expand_path('../epp-client/requests/hello_request.rb',  __FILE__)
 end
