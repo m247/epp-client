@@ -205,28 +205,7 @@ module EPP
 
       # @return [Request] Login Request Payload
       def login_request
-        @req = Request.new('login', next_tid) do |login|
-          tag = @tag.length > 2 ? @tag : "##{@tag}"
-          login << XML::Node.new('clID', tag)
-          login << XML::Node.new('pw', @passwd)
-
-          options = XML::Node.new('options')
-          options << XML::Node.new('version', @options[:version])
-          options << XML::Node.new('lang', @options[:lang])
-          login << options
-
-          svcs = XML::Node.new('svcs')
-          @options[:services].each { |uri| svcs << XML::Node.new('objURI', uri) }
-          login << svcs
-
-          unless @options[:extensions].empty?
-            ext = XML::Node.new('svcExtension')
-            @options[:extensions].each do |uri|
-              ext << XML::Node.new('extURI', uri)
-            end
-            svcs << ext
-          end
-        end
+        @req = LoginRequest.new(@tag, @passwd, next_tid, @options)
       end
 
       # @return [Request] Logout Request Payload
