@@ -231,7 +231,7 @@ module EPP
 
       # @return [Request] Logout Request Payload
       def logout_request
-        Request.new('logout')
+        @req = LogoutRequest.new
       end
 
       # Perform login
