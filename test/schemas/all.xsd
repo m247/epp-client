@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<schema targetNamespace="epp:client:test:schema"
+    xmlns:contact="urn:ietf:params:xml:ns:contact-1.0"
+    xmlns:domain="urn:ietf:params:xml:ns:domain-1.0"
+    xmlns:host="urn:ietf:params:xml:ns:host-1.0"
+    xmlns:epp="urn:ietf:params:xml:ns:epp-1.0"
+    xmlns:eppcom="urn:ietf:params:xml:ns:eppcom-1.0"
+    xmlns="http://www.w3.org/2001/XMLSchema"
+    elementFormDefault="qualified">
+
+    <!--
+    Import common element types.
+    -->
+    <import namespace="urn:ietf:params:xml:ns:eppcom-1.0" schemaLocation="eppcom-1.0.xsd"/>
+    <import namespace="urn:ietf:params:xml:ns:epp-1.0" schemaLocation="epp-1.0.xsd"/>
+    <import namespace="urn:ietf:params:xml:ns:host-1.0" schemaLocation="host-1.0.xsd"/>
+    <import namespace="urn:ietf:params:xml:ns:domain-1.0" schemaLocation="domain-1.0.xsd"/>
+    <import namespace="urn:ietf:params:xml:ns:contact-1.0" schemaLocation="contact-1.0.xsd"/>
+
+</schema>
