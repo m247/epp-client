@@ -32,13 +32,13 @@ module EPP
     #     for the payload to be added into
     #   @yieldparam [XML::Node] ext XML Node of the extension
     def initialize(command, *args, &block)
-      @command = XML::Node.new(command)
+      @command = xml_node(command)
 
-      cmd = XML::Node.new('command')
+      cmd = xml_node('command')
       cmd << @command
       xml.root << cmd
 
-      ext = XML::Node.new('extension')
+      ext = xml_node('extension')
 
       if block_given?
         tid, _ = args
@@ -80,7 +80,7 @@ module EPP
       cmd << ext if ext.children?
 
       unless command == 'logout'
-        cmd << XML::Node.new('clTRID', tid || 'ABC-12345')
+        cmd << xml_node('clTRID', tid || 'ABC-12345')
       end
     end
 
