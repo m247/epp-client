@@ -18,4 +18,12 @@ class Test::Unit::TestCase
   def schema
     @schema ||= load_schema('all')
   end
+  def xpath_find(query)
+    @xml.find(query, @namespaces).first.content.strip
+  end
+  def xpath_each(query)
+    @xml.find(query, @namespaces).each do |node|
+      yield node
+    end
+  end
 end
