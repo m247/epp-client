@@ -115,6 +115,12 @@ module EPP
     def last_error
       @error
     end
+    # Return the options the receiver was initialized with
+    #
+    # @return [Hash] configuration options
+    def options
+      @options
+    end
 
     # Runs a block while logged into the receiver
     #
