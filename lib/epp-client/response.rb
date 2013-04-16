@@ -68,10 +68,18 @@ module EPP
       @xml.inspect
     end
 
-    # Returns a the formatted response XML
-    # @return [String] formatted XML response
+    # Returns the XML response document
+    # @return [XML::Document] XML response document
     def to_xml
-      @xml.to_s(:indent => true)
+      @xml
+    end
+
+    # Convert the receiver to a string
+    #
+    # @param [Hash] opts Formatting options, passed to the XML::Document
+    # @return [String] formatted XML response
+    def to_s(opts = {})
+      @xml.to_s({:indent => false}.merge(opts))
     end
 
     private
