@@ -94,7 +94,7 @@ module EPP
         Request.new(command, payload, extension, next_tid)
       end
 
-      @resp = send_recv_frame(@req.to_s)
+      @resp = send_recv_frame(@req)
     end
 
     # Return the Request object created by the last call to #request
@@ -208,16 +208,6 @@ module EPP
         "%s-%06d" % [@tag, @tid]
       end
 
-      # @return [Request] Login Request Payload
-      def login_request
-        @req = LoginRequest.new(@tag, @passwd, next_tid, @options)
-      end
-
-      # @return [Request] Logout Request Payload
-      def logout_request
-        @req = LogoutRequest.new
-      end
-
       # Perform login
       #
       # @return [true] login successful
@@ -225,7 +215,8 @@ module EPP
       # @see login_request
       def login!
         @error = nil
-        response = send_recv_frame(login_request.to_s)
+        request = LoginRequest.new(@tag, @passwd, next_tid, @options)
+        response = send_recv_frame(request)
 
         return true if response.code == 1000
         raise @error = ResponseError.new(response.code, response.message, response.to_xml)
@@ -237,7 +228,8 @@ module EPP
       # @raise [ResponseError] logout failed
       # @see logout_request
       def logout!
-        response = send_recv_frame(logout_request.to_s)
+        request = LogoutRequest.new
+        response = send_recv_frame(request)
 
         return true if response.code == 1500
         raise @error = ResponseError.new(response.code, response.message, response.to_xml)
@@ -255,8 +247,10 @@ module EPP
       end
 
       # Send XML frame
+      # @param [String,Request] xml Payload to send
       # @return [Integer] number of bytes written
       def send_frame(xml)
+        xml = xml.to_s if xml.kind_of?(Request)
         @sock.write([xml.size + 4].pack("N") + xml)
       end
 
