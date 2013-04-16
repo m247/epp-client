@@ -177,8 +177,7 @@ module EPP
             raise e
           end
         ensure
-          @sock.close
-          @conn.close
+          @sock.close # closes @conn
           conn = sock = nil
         end
       end
