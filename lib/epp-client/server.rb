@@ -154,6 +154,7 @@ module EPP
     #   end
     def connection
       @connection_errors = []
+      @addrinfo.each do |_,port,_,addr|
         begin
           @conn = TCPSocket.new(addr, port)
         rescue Errno::EINVAL => e
