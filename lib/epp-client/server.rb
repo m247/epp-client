@@ -154,8 +154,13 @@ module EPP
     #   end
     def connection
       @connection_errors = []
-      @addrinfo.each do |_,port,_,addr|
-        @conn = TCPSocket.new(addr, port)
+        begin
+          @conn = TCPSocket.new(addr, port)
+        rescue Errno::EINVAL => e
+          message = e.message.split(" - ")[1]
+          raise Errno::EINVAL, "#{message}: TCPSocket.new(#{addr.inspect}, #{port.inspect})"
+        end
+
         @sock = OpenSSL::SSL::SSLSocket.new(@conn)
         @sock.sync_close = true
 
