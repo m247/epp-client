@@ -155,11 +155,17 @@ module EPP
     def connection
       @connection_errors = []
       @addrinfo.each do |_,port,_,addr|
+        retried = false
         begin
           @conn = TCPSocket.new(addr, port)
         rescue Errno::EINVAL => e
-          message = e.message.split(" - ")[1]
-          raise Errno::EINVAL, "#{message}: TCPSocket.new(#{addr.inspect}, #{port.inspect})"
+          if retried
+            message = e.message.split(" - ")[1]
+            raise Errno::EINVAL, "#{message}: TCPSocket.new(#{addr.inspect}, #{port.inspect})"
+          end
+
+          retried = true
+          retry
         end
 
         @sock = OpenSSL::SSL::SSLSocket.new(@conn)
