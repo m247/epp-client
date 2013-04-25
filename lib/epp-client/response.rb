@@ -36,7 +36,12 @@ module EPP
     # Error reason
     # @return [String] error reason
     def error_reason
-      @error_reason ||= result.find('e:extValue/e:reason/text()').first.content.strip
+      unless defined?(@error_reason)
+        reason = result.find('e:extValue/e:reason/text()').first
+        @error_reason = reason && reason.content.strip
+      end
+
+      @error_reason
     end
 
     # Response data
