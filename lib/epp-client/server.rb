@@ -71,7 +71,9 @@ module EPP
     # Sends a Hello Request to the server
     # @return [Boolean] True if greeting was returned
     def hello
-      send_frame(HelloRequest.new.to_s)
+      hello   = EPP::Requests::Hello.new
+      request = EPP::Request.new(hello)
+      send_frame(request)
       return true if recv_frame =~ /<greeting>/
       false
     end
