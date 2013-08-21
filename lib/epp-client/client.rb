@@ -33,11 +33,18 @@ module EPP
     #                          appropriate socket constants. Will cause connections to be
     #                          limited to this address family. Default try all addresses.
     def initialize(tag, passwd, host, options = {})
+      @tag, @passwd, @host, @options = tag, passwd, host, options
       @conn = if options.delete(:compatibility) == true
         OldServer.new(tag, passwd, host, options)
       else
         Server.new(tag, passwd, host, options)
       end
+    end
+
+    attr_reader :tag, :passwd, :host, :options
+
+    def compatibility?
+      @conn.is_a?(OldServer)
     end
 
     # Returns the last request sent to the EPP server
