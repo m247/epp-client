@@ -43,22 +43,49 @@ module EPP
     # Returns the last request sent to the EPP server
     #
     # @return [Request] last request sent to the EPP server
-    def _last_request
+    def last_request
       @conn.last_request
+    end
+
+    # Returns the last request sent to the EPP server
+    #
+    # @deprecated
+    # @return [Request] last request sent to the EPP server
+    def _last_request
+      warn "The #{self.class}#_last_request method is deprecated, please call #last_request"
+      last_request
     end
 
     # Returns the last response received from the EPP server
     #
     # @return [Response] last response received from the EPP server
-    def _last_response
+    def last_response
       @conn.last_response
+    end
+
+    # Returns the last response received from the EPP server
+    #
+    # @deprecated
+    # @return [Response] last response received from the EPP server
+    def _last_response
+      warn "The #{self.class}#_last_response method is deprecated, please call #last_response"
+      last_response
     end
 
     # Returns the last error received from a login or logout request
     #
     # @return [ResponseError] last error received from login/logout request
-    def _last_error
+    def last_error
       @conn.last_error
+    end
+
+    # Returns the last error received from a login or logout request
+    #
+    # @deprecated
+    # @return [ResponseError] last error received from login/logout request
+    def _last_error
+      warn "The #{self.class}#_last_error method is deprecated, please call #last_error"
+      last_error
     end
 
     # Send hello command
