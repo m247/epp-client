@@ -28,10 +28,14 @@ module EPP
   end
 
   module Commands
+    autoload :Check,    File.expand_path('../epp-client/commands/check.rb',    __FILE__)
     autoload :Login,    File.expand_path('../epp-client/commands/login.rb',    __FILE__)
     autoload :Logout,   File.expand_path('../epp-client/commands/logout.rb',   __FILE__)
     autoload :Poll,     File.expand_path('../epp-client/commands/poll.rb',     __FILE__)
   end
 
+  module Domain
+    autoload :Check,    File.expand_path('../epp-client/domain/check.rb',     __FILE__)
+  end
 
 end
