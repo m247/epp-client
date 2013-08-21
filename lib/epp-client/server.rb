@@ -277,7 +277,7 @@ module EPP
       # @return [Integer] number of bytes written
       def send_frame(xml)
         xml = xml.to_s if xml.kind_of?(Request)
-        @sock.write([xml.size + 4].pack("N") + xml)
+        @sock.write([xml.size + HEADER_LEN].pack("N") + xml)
       end
 
       # Receive XML frame
@@ -291,7 +291,7 @@ module EPP
           raise ServerError, "Failed to read header from remote host"
         else
           len = header.unpack('N')[0]
-          
+
           raise ServerError, "Bad frame header from server, should be greater than #{HEADER_LEN}" unless len > HEADER_LEN
           response = @sock.read(len - HEADER_LEN)
         end
