@@ -222,6 +222,14 @@ module EPP
         "%s-%06d" % [@tag, @tid]
       end
 
+      # @return [String] next auth transaction id
+      def auth_tid
+        @auth_tid ||= 0
+        @auth_tid += 1
+        date = Time.now.strftime("%Y%m%d")
+        "%s-AUTH-%s%06d" % [@tag, date, @auth_tid]
+      end
+
       # Perform login
       #
       # @return [true] login successful
