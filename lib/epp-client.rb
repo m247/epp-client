@@ -50,4 +50,12 @@ module EPP
     autoload :Update,   File.expand_path('../epp-client/domain/update.rb',    __FILE__)
   end
 
+  module Contact
+    autoload :Check,    File.expand_path('../epp-client/contact/check.rb',     __FILE__)
+    autoload :Create,   File.expand_path('../epp-client/contact/create.rb',    __FILE__)
+    autoload :Delete,   File.expand_path('../epp-client/contact/delete.rb',    __FILE__)
+    autoload :Info,     File.expand_path('../epp-client/contact/info.rb',      __FILE__)
+    autoload :Transfer, File.expand_path('../epp-client/contact/transfer.rb',  __FILE__)
+    autoload :Update,   File.expand_path('../epp-client/contact/update.rb',    __FILE__)
+  end
 end
