@@ -15,7 +15,7 @@ module EPP
         @namespaces ||= {}
         node = host_node(name)
 
-        xattr = XML::Attr.new(node, "schemaLocation", "urn:ietf:params:xml:ns:host-1.0 host-1.0.xsd")
+        xattr = XML::Attr.new(node, "schemaLocation", SCHEMA_LOCATION)
         xattr.namespaces.namespace = @namespaces['xsi'] || XML::Namespace.new(node, 'xsi', 'http://www.w3.org/2001/XMLSchema-instance')
         
         node
@@ -29,7 +29,7 @@ module EPP
         end
         def host_namespace(node)
           return @namespaces['host'] if @namespaces.has_key?('host')
-          @namespaces['host'] = xml_namespace(node, 'host', 'urn:ietf:params:xml:ns:host-1.0')
+          @namespaces['host'] = xml_namespace(node, 'host', NAMESPACE)
         end
 
         def addrs_to_xml(node, addrs)

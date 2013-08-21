@@ -15,7 +15,7 @@ module EPP
         @namespaces ||= {}
         node = contact_node(name)
 
-        xattr = XML::Attr.new(node, "schemaLocation", "urn:ietf:params:xml:ns:contact-1.0 contact-1.0.xsd")
+        xattr = XML::Attr.new(node, "schemaLocation", SCHEMA_LOCATION)
         xattr.namespaces.namespace = @namespaces['xsi'] || XML::Namespace.new(node, 'xsi', 'http://www.w3.org/2001/XMLSchema-instance')
 
         node
@@ -29,7 +29,7 @@ module EPP
         end
         def contact_namespace(node)
           return @namespaces['contact'] if @namespaces.has_key?('contact')
-          @namespaces['contact'] = xml_namespace(node, 'contact', 'urn:ietf:params:xml:ns:contact-1.0')
+          @namespaces['contact'] = xml_namespace(node, 'contact', NAMESPACE)
         end
 
         def postal_info_to_xml(postal_info)

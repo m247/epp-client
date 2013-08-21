@@ -12,14 +12,6 @@ end
 
 require File.expand_path('../epp-client/xml_helper.rb',     __FILE__)
 
-# Require typically required source files
-require File.expand_path('../epp-client/client',            __FILE__)
-require File.expand_path('../epp-client/server.rb',         __FILE__)
-require File.expand_path('../epp-client/request.rb',        __FILE__)
-require File.expand_path('../epp-client/response.rb',       __FILE__)
-require File.expand_path('../epp-client/response_error.rb', __FILE__)
-
-# Autoload less frequently required source files
 module EPP
   autoload :OldServer, File.expand_path('../epp-client/old_server.rb',    __FILE__)
 
@@ -43,6 +35,9 @@ module EPP
   end
 
   module Domain
+    NAMESPACE       = 'urn:ietf:params:xml:ns:domain-1.0'
+    SCHEMA_LOCATION = 'urn:ietf:params:xml:ns:domain-1.0 domain-1.0.xsd'
+
     autoload :Check,    File.expand_path('../epp-client/domain/check.rb',     __FILE__)
     autoload :Create,   File.expand_path('../epp-client/domain/create.rb',    __FILE__)
     autoload :Delete,   File.expand_path('../epp-client/domain/delete.rb',    __FILE__)
@@ -53,6 +48,9 @@ module EPP
   end
 
   module Contact
+    NAMESPACE       = 'urn:ietf:params:xml:ns:contact-1.0'
+    SCHEMA_LOCATION = 'urn:ietf:params:xml:ns:contact-1.0 contact-1.0.xsd'
+
     autoload :Check,    File.expand_path('../epp-client/contact/check.rb',     __FILE__)
     autoload :Create,   File.expand_path('../epp-client/contact/create.rb',    __FILE__)
     autoload :Delete,   File.expand_path('../epp-client/contact/delete.rb',    __FILE__)
@@ -62,6 +60,9 @@ module EPP
   end
 
   module Host
+    NAMESPACE       = 'urn:ietf:params:xml:ns:host-1.0'
+    SCHEMA_LOCATION = 'urn:ietf:params:xml:ns:host-1.0 host-1.0.xsd'
+
     autoload :Check,    File.expand_path('../epp-client/host/check.rb',     __FILE__)
     autoload :Create,   File.expand_path('../epp-client/host/create.rb',    __FILE__)
     autoload :Delete,   File.expand_path('../epp-client/host/delete.rb',    __FILE__)
@@ -69,3 +70,9 @@ module EPP
     autoload :Update,   File.expand_path('../epp-client/host/update.rb',    __FILE__)
   end
 end
+
+require File.expand_path('../epp-client/client',            __FILE__)
+require File.expand_path('../epp-client/server.rb',         __FILE__)
+require File.expand_path('../epp-client/request.rb',        __FILE__)
+require File.expand_path('../epp-client/response.rb',       __FILE__)
+require File.expand_path('../epp-client/response_error.rb', __FILE__)

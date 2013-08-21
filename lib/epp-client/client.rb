@@ -12,10 +12,7 @@ module EPP
     # @example
     #   services = DEFAULT_SERVICES + %w(urn:ietf:params:xml:ns:secDNS-1.1)
     #   EPP::Client.new('username','password','epp.example.com', :services => services)
-    DEFAULT_SERVICES = %w(
-      urn:ietf:params:xml:ns:domain-1.0
-      urn:ietf:params:xml:ns:contact-1.0
-      urn:ietf:params:xml:ns:host-1.0 )
+    DEFAULT_SERVICES = [ Domain::NAMESPACE, Contact::NAMESPACE, Host::NAMESPACE ]
 
     # Create new instance of EPP::Client.
     #
