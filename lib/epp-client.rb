@@ -47,6 +47,7 @@ module EPP
     autoload :Update,   File.expand_path('../epp-client/domain/update.rb',    __FILE__)
 
     autoload :CheckResponse,    File.expand_path('../epp-client/domain/check_response.rb',     __FILE__)
+    autoload :DeleteResponse,   File.expand_path('../epp-client/domain/delete_response.rb',    __FILE__)
   end
 
   module Contact
