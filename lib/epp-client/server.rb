@@ -236,8 +236,10 @@ module EPP
       # @raise [ResponseError] login failed
       # @see login_request
       def login!
-        @error = nil
-        request = LoginRequest.new(@tag, @passwd, next_tid, @options)
+        @error   = nil
+        login    = EPP::Commands::Login.new(@tag, @passwd, @options)
+        command  = EPP::Requests::Command.new(auth_tid, login)
+        request  = EPP::Request.new(command)
         response = send_recv_frame(request)
 
         return true if response.code == 1000
@@ -250,7 +252,9 @@ module EPP
       # @raise [ResponseError] logout failed
       # @see logout_request
       def logout!
-        request = LogoutRequest.new
+        logout   = EPP::Commands::Logout.new
+        command  = EPP::Requests::Command.new(auth_tid, logout)
+        request  = EPP::Request.new(command)
         response = send_recv_frame(request)
 
         return true if response.code == 1500
