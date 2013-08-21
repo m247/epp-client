@@ -23,6 +23,11 @@ require File.expand_path('../epp-client/response_error.rb', __FILE__)
 module EPP
   module Requests
     autoload :Hello,     File.expand_path('../epp-client/requests/hello.rb',     __FILE__)
+    autoload :Command,   File.expand_path('../epp-client/requests/command.rb',   __FILE__)
+  end
+
+  module Commands
+    autoload :Logout,   File.expand_path('../epp-client/commands/logout.rb',   __FILE__)
   end
 
 
