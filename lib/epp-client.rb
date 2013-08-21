@@ -21,6 +21,8 @@ require File.expand_path('../epp-client/response_error.rb', __FILE__)
 
 # Autoload less frequently required source files
 module EPP
+  autoload :OldServer, File.expand_path('../epp-client/old_server.rb',    __FILE__)
+
   module Requests
     autoload :Hello,     File.expand_path('../epp-client/requests/hello.rb',     __FILE__)
     autoload :Command,   File.expand_path('../epp-client/requests/command.rb',   __FILE__)
