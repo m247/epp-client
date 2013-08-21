@@ -29,7 +29,13 @@ class Test::Unit::TestCase
     @schema ||= load_schema('all')
   end
   def xpath_find(query)
-    @xml.find(query, @namespaces).first.content.strip
+    n = @xml.find(query, @namespaces).first
+    case n
+    when XML::Node
+      n.content.strip
+    when XML::Attr
+      n.value.strip
+    end
   end
   def xpath_each(query)
     @xml.find(query, @namespaces).each do |node|
