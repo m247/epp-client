@@ -88,6 +88,10 @@ module EPP
       last_error
     end
 
+    def greeting
+      @conn.greeting
+    end
+
     # Send hello command
     def hello
       @conn.connection do
