@@ -16,6 +16,10 @@ class Test::Unit::TestCase
     addrinfo = [["AF_INET", port, "198.51.100.53", "198.51.100.53", 2, 1, 6]]
     Socket.expects(:getaddrinfo).with(host, port, nil, Socket::SOCK_STREAM).returns(addrinfo).at_least_once
   end
+  def load_xml(name)
+    xml_path = File.expand_path("../fixtures/responses/#{name}.xml", __FILE__)
+    File.read(xml_path)
+  end
   def load_schema(name)
     xsd_path = File.expand_path("../support/schemas/#{name}.xsd", __FILE__)
     xsd_doc  = XML::Document.file(xsd_path)
