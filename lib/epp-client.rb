@@ -8,15 +8,22 @@ require File.expand_path('../epp-client/version', __FILE__)
 module EPP
   # Generic error class for all EPP errors
   class Error < RuntimeError; end
+end
 
-  autoload :Client,         File.expand_path('../epp-client/client.rb',         __FILE__)
-  autoload :Server,         File.expand_path('../epp-client/server.rb',         __FILE__)
-  autoload :OldServer,      File.expand_path('../epp-client/old_server.rb',     __FILE__)
-  autoload :Request,        File.expand_path('../epp-client/request.rb',        __FILE__)
-  autoload :Response,       File.expand_path('../epp-client/response.rb',       __FILE__)
-  autoload :ResponseError,  File.expand_path('../epp-client/response_error.rb', __FILE__)
+require File.expand_path('../epp-client/xml_helper.rb',     __FILE__)
 
-  autoload :HelloRequest,   File.expand_path('../epp-client/requests/hello_request.rb',  __FILE__)
-  autoload :LoginRequest,   File.expand_path('../epp-client/requests/login_request.rb',  __FILE__)
-  autoload :LogoutRequest,   File.expand_path('../epp-client/requests/logout_request.rb',  __FILE__)
+# Require typically required source files
+require File.expand_path('../epp-client/client',            __FILE__)
+require File.expand_path('../epp-client/server.rb',         __FILE__)
+require File.expand_path('../epp-client/request.rb',        __FILE__)
+require File.expand_path('../epp-client/response.rb',       __FILE__)
+require File.expand_path('../epp-client/response_error.rb', __FILE__)
+
+# Autoload less frequently required source files
+module EPP
+  module Requests
+    autoload :Hello,     File.expand_path('../epp-client/requests/hello.rb',     __FILE__)
+  end
+
+
 end
