@@ -45,6 +45,8 @@ module EPP
     autoload :Renew,    File.expand_path('../epp-client/domain/renew.rb',     __FILE__)
     autoload :Transfer, File.expand_path('../epp-client/domain/transfer.rb',  __FILE__)
     autoload :Update,   File.expand_path('../epp-client/domain/update.rb',    __FILE__)
+
+    autoload :CheckResponse,    File.expand_path('../epp-client/domain/check_response.rb',     __FILE__)
   end
 
   module Contact
