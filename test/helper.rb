@@ -36,4 +36,7 @@ class Test::Unit::TestCase
       yield node
     end
   end
+  def namespaces_from_request(request = @request)
+    @namespaces = Hash[*request.namespaces.map { |k,ns| [k, ns.href] }.flatten]
+  end
 end
