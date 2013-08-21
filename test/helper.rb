@@ -7,7 +7,6 @@ $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 require 'epp-client'
 
-EPP::Request.enable_validation!
 
 class Test::Unit::TestCase
   def stub_getaddrinfo!(host = 'epp.test.host', port = 700)
