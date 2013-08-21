@@ -3,10 +3,24 @@ require 'test/unit'
 require 'shoulda'
 require 'mocha/setup'
 
+if RUBY_VERSION >= '1.9'
+  require 'simplecov'
+end
+
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 require 'epp-client'
 
+# Load EVERYTHING so SimpleCov works
+EPP::constants.each do |constant|
+  konstant = EPP::const_get(constant)
+  case konstant
+  when Class, Module
+    konstant::constants.each do |k2|
+      konstant::const_get(k2)
+    end
+  end
+end
 
 class Test::Unit::TestCase
   def stub_getaddrinfo!(host = 'epp.test.host', port = 700)
