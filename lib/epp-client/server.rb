@@ -131,8 +131,10 @@ module EPP
     #
     # @yield logged in EPP server session
     # @example typical usage
-    #   with_login do
-    #     # .. do stuff with logged in session ..
+    #   connection do
+    #     with_login do
+    #       # .. do stuff with logged in session ..
+    #     end
     #   end
     def with_login
       login!
