@@ -29,6 +29,7 @@ module EPP
 
   module Commands
     autoload :Check,    File.expand_path('../epp-client/commands/check.rb',    __FILE__)
+    autoload :Create,   File.expand_path('../epp-client/commands/create.rb',   __FILE__)
     autoload :Delete,   File.expand_path('../epp-client/commands/delete.rb',   __FILE__)
     autoload :Info,     File.expand_path('../epp-client/commands/info.rb',     __FILE__)
     autoload :Login,    File.expand_path('../epp-client/commands/login.rb',    __FILE__)
@@ -40,6 +41,7 @@ module EPP
 
   module Domain
     autoload :Check,    File.expand_path('../epp-client/domain/check.rb',     __FILE__)
+    autoload :Create,   File.expand_path('../epp-client/domain/create.rb',    __FILE__)
     autoload :Delete,   File.expand_path('../epp-client/domain/delete.rb',    __FILE__)
     autoload :Info,     File.expand_path('../epp-client/domain/info.rb',      __FILE__)
     autoload :Renew,    File.expand_path('../epp-client/domain/renew.rb',     __FILE__)
