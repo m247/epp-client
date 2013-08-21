@@ -15,6 +15,10 @@ module EPP
       code == 1000
     end
 
+    def pending?
+      code == 1001
+    end
+
     # Response code
     # @return [Integer] response code
     def code

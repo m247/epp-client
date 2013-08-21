@@ -50,6 +50,7 @@ module EPP
     autoload :CreateResponse,   File.expand_path('../epp-client/domain/create_response.rb',    __FILE__)
     autoload :DeleteResponse,   File.expand_path('../epp-client/domain/delete_response.rb',    __FILE__)
     autoload :RenewResponse,    File.expand_path('../epp-client/domain/renew_response.rb',     __FILE__)
+    autoload :TransferResponse, File.expand_path('../epp-client/domain/transfer_response.rb',  __FILE__)
     autoload :UpdateResponse,   File.expand_path('../epp-client/domain/update_response.rb',    __FILE__)
   end
 
