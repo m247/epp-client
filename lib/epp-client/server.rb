@@ -120,6 +120,12 @@ module EPP
     def options
       @options
     end
+    # Return the greeting XML received during the last connection
+    #
+    # @return [String]
+    def greeting
+      @greeting
+    end
 
     # Runs a block while logged into the receiver
     #
@@ -172,7 +178,7 @@ module EPP
 
         begin
           @sock.connect
-          recv_frame  # Perform initial recv
+          @greeting = recv_frame  # Perform initial recv
 
           return yield
         rescue Errno::ECONNREFUSED, Errno::ECONNRESET, Errno::EHOSTUNREACH => e
