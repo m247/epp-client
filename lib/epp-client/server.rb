@@ -63,9 +63,6 @@ module EPP
     def initialize(tag, passwd, host, options = {})
       @tag, @passwd, @host = tag, passwd, host
       @options = DEFAULTS.merge(options)
-
-      @addrinfo = resolve_addrinfo
-      raise "Unable to resolve #{@host}" if @addrinfo.empty?
     end
 
     # Sends a Hello Request to the server
@@ -156,7 +153,7 @@ module EPP
     #   end
     def connection
       @connection_errors = []
-      @addrinfo.each do |_,port,_,addr|
+      addrinfo.each do |_,port,_,addr,_,_,_|
         retried = false
         begin
           @conn = TCPSocket.new(addr, port)
@@ -196,16 +193,17 @@ module EPP
         end
       end
 
-      # Update our addrinfo in case the DNS has changed
-      new_addrinfo = resolve_addrinfo
-      if !new_addrinfo.empty? && @addrinfo != new_addrinfo
-        @addrinfo = new_addrinfo
-      end
+      # Should only get here if we didn't return from the block above
 
+      addrinfo(true) # Update our addrinfo in case the DNS has changed
       raise @connection_errors.last unless @connection_errors.empty?
       raise Errno::EHOSTUNREACH, "Failed to connect to host #{@host}"
     end
     private
+      def addrinfo(refresh = false)
+        @addrinfo = nil if refresh
+        @addrinfo ||= resolve_addrinfo
+      end
       def resolve_addrinfo
         family = case @options[:address_family]
         when 'AF_INET',  Socket::AF_INET  then Socket::AF_INET
