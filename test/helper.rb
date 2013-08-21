@@ -17,7 +17,7 @@ class Test::Unit::TestCase
     Socket.expects(:getaddrinfo).with(host, port, nil, Socket::SOCK_STREAM).returns(addrinfo).at_least_once
   end
   def load_schema(name)
-    xsd_path = File.expand_path("../schemas/#{name}.xsd", __FILE__)
+    xsd_path = File.expand_path("../support/schemas/#{name}.xsd", __FILE__)
     xsd_doc  = XML::Document.file(xsd_path)
     XML::Schema.document(xsd_doc)
   end
