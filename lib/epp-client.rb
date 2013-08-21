@@ -28,6 +28,7 @@ module EPP
   end
 
   module Commands
+    autoload :Login,    File.expand_path('../epp-client/commands/login.rb',    __FILE__)
     autoload :Logout,   File.expand_path('../epp-client/commands/logout.rb',   __FILE__)
   end
 
