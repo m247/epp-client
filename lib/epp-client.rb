@@ -24,6 +24,7 @@ module EPP
   module Requests
     autoload :Hello,     File.expand_path('../epp-client/requests/hello.rb',     __FILE__)
     autoload :Command,   File.expand_path('../epp-client/requests/command.rb',   __FILE__)
+    autoload :Extension, File.expand_path('../epp-client/requests/extension.rb', __FILE__)
   end
 
   module Commands
