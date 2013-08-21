@@ -35,6 +35,7 @@ module EPP
     autoload :Logout,   File.expand_path('../epp-client/commands/logout.rb',   __FILE__)
     autoload :Poll,     File.expand_path('../epp-client/commands/poll.rb',     __FILE__)
     autoload :Renew,    File.expand_path('../epp-client/commands/renew.rb',    __FILE__)
+    autoload :Transfer, File.expand_path('../epp-client/commands/transfer.rb', __FILE__)
   end
 
   module Domain
@@ -42,6 +43,7 @@ module EPP
     autoload :Delete,   File.expand_path('../epp-client/domain/delete.rb',    __FILE__)
     autoload :Info,     File.expand_path('../epp-client/domain/info.rb',      __FILE__)
     autoload :Renew,    File.expand_path('../epp-client/domain/renew.rb',     __FILE__)
+    autoload :Transfer, File.expand_path('../epp-client/domain/transfer.rb',  __FILE__)
   end
 
 end
