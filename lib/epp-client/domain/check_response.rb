@@ -12,7 +12,7 @@ module EPP
       
       protected
         def availability
-          @availability ||= @response.data.find('//domain:name', namespaces).inject({}) do |hash, node|
+          @availability ||= nodes_for_xpath('//domain:name').inject({}) do |hash, node|
             hash[node.content.strip] = node['avail'] == '1'
             hash
           end

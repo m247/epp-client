@@ -4,25 +4,25 @@ module EPP
   module Domain
     class InfoResponse < Response
       def name
-        @name ||= @response.data.find('//domain:name', namespaces).first.content.strip
+        @name ||= value_for_xpath('//domain:name')
       end
       def roid
-        @roid ||= @response.data.find('//domain:roid', namespaces).first.content.strip        
+        @roid ||= value_for_xpath('//domain:roid')        
       end
       def status
-        @status ||= @response.data.find('//domain:status/@s', namespaces).first.value
+        @status ||= value_for_xpath('//domain:status/@s')
       end
       def registrant
-        @registrant ||= @response.data.find('//domain:registrant', namespaces).first.content.strip
+        @registrant ||= value_for_xpath('//domain:registrant')
       end
       def contacts
-        @contacts ||= @response.data.find('//domain:contact', namespaces).inject({}) do |hash, node|
+        @contacts ||= nodes_for_xpath('//domain:contact').inject({}) do |hash, node|
           hash[node['type'].to_s] = node.content.strip
           hash
         end
       end
       def nameservers
-        @nameservers ||= @response.data.find('//domain:ns', namespaces).map do |ns_node|
+        @nameservers ||= nodes_for_xpath('//domain:ns').map do |ns_node|
           ns = ns_node.find('domain:hostAttr', namespaces).map do |hostAttr|
             { 'name' => hostAttr.find('domain:name').first.content.strip,
               'ipv4' => hostAttr.find('domain:addr[@ip="v4"]').first.content.strip,
@@ -33,32 +33,32 @@ module EPP
         end.flatten
       end
       def hosts
-        @hosts ||= @response.data.find('//domain:host', namespaces).map { |n| n.content.strip }
+        @hosts ||= values_for_xpath('//domain:host')
       end
       def client_id
-        @clid ||= @response.data.find('//domain:clID', namespaces).first.content.strip
+        @clid ||= value_for_xpath('//domain:clID')
       end
       def creator_id
-        @crid ||= @response.data.find('//domain:crID', namespaces).first.content.strip
+        @crid ||= value_for_xpath('//domain:crID')
       end
       def created_date
-        @crdate ||= Time.parse(@response.data.find('//domain:crDate', namespaces).first.content.strip)
+        @crdate ||= Time.parse(value_for_xpath('//domain:crDate'))
       end
       def updator_id
-        @upid ||= @response.data.find('//domain:upID', namespaces).first.content.strip
+        @upid ||= value_for_xpath('//domain:upID')
       end
       def updated_date
-        @update ||= Time.parse(@response.data.find('//domain:upDate', namespaces).first.content.strip)
+        @update ||= Time.parse(value_for_xpath('//domain:upDate'))
       end
       def expiration_date
-        @exdate ||= Time.parse(@response.data.find('//domain:exDate', namespaces).first.content.strip)
+        @exdate ||= Time.parse(value_for_xpath('//domain:exDate'))
       end
       def transfer_date
-        @trdate ||= Time.parse(@response.data.find('//domain:trDate', namespaces).first.content.strip)
+        @trdate ||= Time.parse(value_for_xpath('//domain:trDate'))
       end
       def auth_info
         @auth_info ||= begin
-          { 'pw' => @response.data.find('//domain:authInfo/domain:pw').first.content.strip }
+          { 'pw' => value_for_xpath('//domain:authInfo/domain:pw') }
         end
       end
     end

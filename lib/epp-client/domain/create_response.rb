@@ -4,13 +4,13 @@ module EPP
   module Domain
     class CreateResponse < Response
       def name
-        @name ||= @response.data.find('//domain:name', namespaces).first.content.strip
+        @name ||= value_for_xpath('//domain:name')
       end
       def creation_date
-        @crdate ||= Time.parse(@response.data.find('//domain:crDate', namespaces).first.content.strip)
+        @crdate ||= Time.parse(value_for_xpath('//domain:crDate'))
       end
       def expiration_date
-        @exdate ||= Time.parse(@response.data.find('//domain:exDate', namespaces).first.content.strip)
+        @exdate ||= Time.parse(value_for_xpath('//domain:exDate'))
       end
     end
   end
