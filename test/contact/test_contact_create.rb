@@ -15,7 +15,8 @@ class TestEppContactCreateCommand < Test::Unit::TestCase
             :sp      => "Testshire",
             :pc      => "TE57 1NG",
             :cc      => "GB" } },
-        :auth_info   => {:pw => '2381728348'})
+        :auth_info   => {:pw => '2381728348'},
+        :disclose    => {"0" => %w(voice email)})
 
       @create  = EPP::Commands::Create.new(@contact_create)
       @command = EPP::Requests::Command.new('ABC-123', @create)
@@ -36,7 +37,7 @@ class TestEppContactCreateCommand < Test::Unit::TestCase
     should 'set id' do
       assert_equal 'UK-4398495', xpath_find('//contact:id')
     end
-    
+
     should 'set voice' do
       assert_equal "+44.1234567890", xpath_find('//contact:voice')
     end
@@ -59,6 +60,11 @@ class TestEppContactCreateCommand < Test::Unit::TestCase
 
     should 'set authInfo' do
       assert_equal '2381728348', xpath_find('//contact:authInfo/contact:pw')
+    end
+
+    should 'set disclose' do
+      assert xpath_exists?('//contact:disclose[@flag="0"]/contact:email'), "should disallow disclose of email"
+      assert xpath_exists?('//contact:disclose[@flag="0"]/contact:voice'), "should disallow disclose of voice"
     end
   end
 end

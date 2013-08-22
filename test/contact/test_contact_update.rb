@@ -18,7 +18,8 @@ class TestEppContactUpdateCommand < Test::Unit::TestCase
               :sp      => "Testshire",
               :pc      => "TE57 1NG",
               :cc      => "GB" } },
-          :auth_info => {:pw => '2381728348'}
+          :auth_info   => {:pw => '2381728348'},
+          :disclose    => {"0" => %w(name)}
         })
 
       @update  = EPP::Commands::Update.new(@contact_update)
@@ -73,6 +74,10 @@ class TestEppContactUpdateCommand < Test::Unit::TestCase
 
     should 'set authInfo for change' do
       assert_equal '2381728348', xpath_find('//contact:chg/contact:authInfo/contact:pw')
+    end
+
+    should 'set disclose for change' do
+      assert xpath_exists?('//contact:chg/contact:disclose[@flag="0"]/contact:name'), "should disallow disclose of name"
     end
   end
 end

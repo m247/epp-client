@@ -3,6 +3,8 @@ module EPP
     class Command
       include XMLHelpers
 
+      DISCLOSE_ORDER = ['name', 'org', 'addr', 'voice', 'fax', 'email']
+
       def set_namespaces(namespaces)
         @namespaces = namespaces
       end
@@ -54,16 +56,15 @@ module EPP
           node
         end
         def disclose_to_xml(disclose)
+          flag = disclose.keys.first
           node = contact_node('disclose')
-          node['flag'] = '1' # '0'
+          node['flag'] = flag
 
-          # Each field has a type field with 'loc' or 'int'
-          node << contact_node('name',  disclose[:name])  if disclose[:name]
-          node << contact_node('org',   disclose[:org])   if disclose[:org]
-          node << contact_node('addr',  disclose[:addr])  if disclose[:addr]
-          node << contact_node('voice', disclose[:voice]) if disclose[:voice]
-          node << contact_node('fax',   disclose[:fax])   if disclose[:fax]
-          node << contact_node('email', disclose[:email]) if disclose[:email]
+          DISCLOSE_ORDER.each do |name|
+            next unless disclose[flag].include?(name)
+            node << n = contact_node(name)
+            n['type'] = 'loc' if ['name', 'org', 'addr'].include?(name)
+          end
 
           node
         end
