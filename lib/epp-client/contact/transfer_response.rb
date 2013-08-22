@@ -4,22 +4,22 @@ module EPP
   module Contact
     class TransferResponse < Response
       def id
-        @id ||= @response.data.find('//contact:id').first.content.strip
+        @id ||= value_for_xpath('//contact:id')
       end
       def status
-        @trStatus ||= @response.data.find('//contact:trStatus').first.content.strip
+        @trStatus ||= value_for_xpath('//contact:trStatus')
       end
       def requested_id
-        @reID ||= @response.data.find('//contact:reID').first.content.strip
+        @reID ||= value_for_xpath('//contact:reID')
       end
       def requested_date
-        @reDate ||= Time.parse(@response.data.find('//contact:reDate').first.content.strip)
+        @reDate ||= Time.parse(value_for_xpath('//contact:reDate'))
       end
       def action_id
-        @acID ||= @response.data.find('//contact:acID').first.content.strip
+        @acID ||= value_for_xpath('//contact:acID')
       end
       def action_date
-        @acDate ||= Time.parse(@response.data.find('//contact:acDate').first.content.strip)
+        @acDate ||= Time.parse(value_for_xpath('//contact:acDate'))
       end
     end
   end

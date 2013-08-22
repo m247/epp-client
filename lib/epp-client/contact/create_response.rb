@@ -4,10 +4,10 @@ module EPP
   module Contact
     class CreateResponse < Response
       def id
-        @id ||= @response.data.find('//contact:id', namespaces).first.content.strip
+        @id ||= value_for_xpath('//contact:id')
       end
       def creation_date
-        @crdate ||= Time.parse(@response.data.find('//contact:crDate', namespaces).first.content.strip)
+        @crdate ||= Time.parse(value_for_xpath('//contact:crDate'))
       end
     end
   end
