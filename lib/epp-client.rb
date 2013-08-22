@@ -84,6 +84,12 @@ module EPP
     autoload :Delete,   File.expand_path('../epp-client/host/delete.rb',    __FILE__)
     autoload :Info,     File.expand_path('../epp-client/host/info.rb',      __FILE__)
     autoload :Update,   File.expand_path('../epp-client/host/update.rb',    __FILE__)
+
+    autoload :CheckResponse,    File.expand_path('../epp-client/host/check_response.rb',     __FILE__)
+    autoload :CreateResponse,   File.expand_path('../epp-client/host/create_response.rb',    __FILE__)
+    autoload :DeleteResponse,   File.expand_path('../epp-client/host/delete_response.rb',    __FILE__)
+    autoload :InfoResponse,     File.expand_path('../epp-client/host/info_response.rb',      __FILE__)
+    autoload :UpdateResponse,   File.expand_path('../epp-client/host/update_response.rb',    __FILE__)
   end
 end
 
