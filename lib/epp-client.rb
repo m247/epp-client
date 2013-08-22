@@ -65,6 +65,8 @@ module EPP
     autoload :Info,     File.expand_path('../epp-client/contact/info.rb',      __FILE__)
     autoload :Transfer, File.expand_path('../epp-client/contact/transfer.rb',  __FILE__)
     autoload :Update,   File.expand_path('../epp-client/contact/update.rb',    __FILE__)
+
+    autoload :CheckResponse,    File.expand_path('../epp-client/contact/check_response.rb',     __FILE__)
   end
 
   module Host
