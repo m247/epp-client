@@ -11,6 +11,7 @@ module EPP
 end
 
 require File.expand_path('../epp-client/xml_helper.rb',     __FILE__)
+require File.expand_path('../epp-client/response_helper.rb',                     __FILE__)
 
 module EPP
   autoload :OldServer, File.expand_path('../epp-client/old_server.rb',    __FILE__)
