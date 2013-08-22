@@ -1,6 +1,8 @@
 module EPP
   module Contact
     class Response
+      include ResponseHelper
+
       def initialize(response)
         @response = response
       end
