@@ -3,6 +3,9 @@ require File.expand_path('../response', __FILE__)
 module EPP
   module Domain
     class TransferResponse < Response
+      def name
+        @name ||= @response.data.find('//domain:name').first.content.strip
+      end
       def status
         @trStatus ||= @response.data.find('//domain:trStatus').first.content.strip
       end

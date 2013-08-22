@@ -21,6 +21,10 @@ class TestEppDomainTransferResponse < Test::Unit::TestCase
         assert_equal 'Command completed successfully', @transfer_response.message
       end
 
+      should 'have domain name' do
+        assert_equal 'example.com', @transfer_response.name
+      end
+
       should 'have transfer status' do
         assert_equal 'pending', @transfer_response.status
       end
@@ -40,11 +44,11 @@ class TestEppDomainTransferResponse < Test::Unit::TestCase
         expected = Time.gm(2002,9,8,22,00,00)
         assert_equal expected, @transfer_response.expiration_date
       end
-      
+
       should 'have action id' do
         assert_equal 'ClientY', @transfer_response.action_id
       end
-      
+
       should 'have action date' do
         # 2000-06-11T22:00:00.0Z
         expected = Time.gm(2000,6,11,22,00,00)
@@ -69,7 +73,11 @@ class TestEppDomainTransferResponse < Test::Unit::TestCase
       should 'have message' do
         assert_equal 'Command completed successfully; action pending', @transfer_response.message
       end
-      
+
+      should 'have domain name' do
+        assert_equal 'example.com', @transfer_response.name
+      end
+
       should 'have transfer status' do
         assert_equal 'pending', @transfer_response.status
       end
@@ -89,11 +97,11 @@ class TestEppDomainTransferResponse < Test::Unit::TestCase
         expected = Time.gm(2002,9,8,22,00,00)
         assert_equal expected, @transfer_response.expiration_date
       end
-      
+
       should 'have action id' do
         assert_equal 'ClientY', @transfer_response.action_id
       end
-      
+
       should 'have action date' do
         # 2000-06-13T22:00:00.0Z
         expected = Time.gm(2000,6,13,22,00,00)
