@@ -86,12 +86,29 @@ module EPP
     #   @yieldparam [XML::Node] xml XML Node of the command
     #     for the payload to be added into
     # @return [Response] EPP Response object
-    def request(command, payload = nil, extension = nil, &block)
-      @req = if payload.nil? && block_given?
-        Request.new(command, next_tid, &block)
-      else
-        Request.new(command, payload, extension, next_tid)
-      end
+    # def request(command, payload = nil, extension = nil, &block)
+    #   @req = if payload.nil? && block_given?
+    #     Request.new(command, req_tid, &block)
+    #   else
+    #     Request.new(command, payload, extension, req_tid)
+    #   end
+    #
+    #   @resp = send_recv_frame(@req)
+    # end
+
+    # @note Primarily an internal method, exposed to enable testing
+    # @param [] command
+    # @param [] extension
+    # @return [EPP::Request]
+    # @see request
+    def prepare_request(command, extension = nil)
+      cmd = EPP::Requests::Command.new(req_tid, command, extension)
+      EPP::Request.new(cmd)
+    end
+
+    def request(command, extension = nil)
+      @req = command.is_a?(EPP::Request) ? command :
+                prepare_request(command, extension)
 
       @resp = send_recv_frame(@req)
     end
@@ -222,10 +239,11 @@ module EPP
       end
 
       # @return [String] next transaction id
-      def next_tid
-        @tid ||= 0
-        @tid += 1
-        "%s-%06d" % [@tag, @tid]
+      def req_tid
+        @req_tid ||= 0
+        @req_tid += 1
+        date = Time.now.strftime("%Y%m%d")
+        "%s-%s%06d" % [@tag, date, @req_tid]
       end
 
       # @return [String] next auth transaction id
