@@ -103,6 +103,50 @@ module EPP
       end
     end
 
+    def check(payload, extension = nil)
+      check = EPP::Commands::Check.new(payload)
+      command(check, extension)
+    end
+
+    def create(payload, extension = nil)
+      create = EPP::Commands::Create.new(payload)
+      command(create, extension)
+    end
+
+    def delete(payload, extension = nil)
+      delete = EPP::Commands::Delete.new(payload)
+      command(delete, extension)
+    end
+
+    def info(payload, extension = nil)
+      info = EPP::Commands::Info.new(payload)
+      command(info, extension)
+    end
+
+    def renew(payload, extension = nil)
+      renew = EPP::Commands::Renew.new(payload)
+      command(renew, extension)
+    end
+
+    def transfer(op, payload, extension = nil)
+      transfer = EPP::Commands::Transfer.new(op, payload)
+      command(transfer, extension)
+    end
+
+    def update(payload, extension = nil)
+      update = EPP::Commands::Update.new(payload)
+      command(update, extension)
+    end
+
+    def poll
+      poll = EPP::Commands::Poll.new
+      command(poll)
+    end
+    def ack(msgID)
+      ack = EPP::Commands::Poll.new(msgID)
+      command(ack)
+    end
+
     # Calls an EPP command after connecting to the EPP Server and logging in.
     #
     # @overload method_missing(command, payload, extension)
@@ -117,12 +161,25 @@ module EPP
     #   @yieldparam [XML::Node] ext XML Node of the extension block
     #     for the extension payload to be added into
     # @return [Response] EPP Response object
-    def method_missing(command, payload = nil, extension = nil, &block)
-      @conn.connection do
-        @conn.with_login do
-          @conn.request(command, payload, extension, &block)
+    # def method_missing(command, payload = nil, extension = nil, &block)
+    #   @conn.connection do
+    #     @conn.with_login do
+    #       @conn.request(command, payload, extension, &block)
+    #     end
+    #   end
+    # end
+
+    def prepare_request(cmd, extension = nil)
+      @conn.prepare_request(cmd, extension)
+    end
+
+    protected
+      def command(cmd, extension = nil)
+        @conn.connection do
+          @conn.with_login do
+            @conn.request(cmd, extension)
+          end
         end
       end
-    end
   end
 end
