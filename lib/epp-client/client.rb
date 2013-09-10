@@ -169,10 +169,6 @@ module EPP
     #   end
     # end
 
-    def prepare_request(cmd, extension = nil)
-      @conn.prepare_request(cmd, extension)
-    end
-
     protected
       def command(cmd, extension = nil)
         @conn.connection do
