@@ -3,6 +3,7 @@ module EPP
     # @note Abstract class, do not instanciate manually
     class Abstract
       include XMLHelpers
+      attr_reader :namespaces
 
       def set_namespaces(namespaces)
         @namespaces = namespaces

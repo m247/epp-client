@@ -2,6 +2,7 @@ module EPP
   module Host
     class Command
       include XMLHelpers
+      attr_reader :namespaces
 
       def set_namespaces(namespaces)
         @namespaces = namespaces

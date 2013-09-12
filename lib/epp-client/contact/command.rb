@@ -2,6 +2,7 @@ module EPP
   module Contact
     class Command
       include XMLHelpers
+      attr_reader :namespaces
 
       DISCLOSE_ORDER = ['name', 'org', 'addr', 'voice', 'fax', 'email']
 
