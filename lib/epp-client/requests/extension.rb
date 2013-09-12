@@ -4,7 +4,8 @@ module EPP
   module Requests
     class Extension < Abstract
       def initialize(*extensions)
-        @extensions = extensions
+        raise ArgumentError, "you must provide at least one extension" if extensions.compact.empty?
+        @extensions = extensions.compact
       end
 
       def name
