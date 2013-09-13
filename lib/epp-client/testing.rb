@@ -2,6 +2,7 @@ require 'epp-client'
 
 module EPP
   class Client
+    # Request Preparation Methods
     def check_prepare(payload, extension = nil)
       check = EPP::Commands::Check.new(payload)
       prepare_request(check, extension)
@@ -48,6 +49,11 @@ module EPP
 
     def prepare_request(cmd, extension = nil)
       @conn.prepare_request(cmd, extension)
+    end
+    
+    # Response Preparation Methods
+    def load_response(xml_data)
+      EPP::Response.new(xml_data)
     end
   end
 end
