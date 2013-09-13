@@ -12,6 +12,10 @@ module EPP
         @response.send(meth, *args, &block)
       end
 
+      def respond_to_missing?(method, include_private)
+        @response.respond_to?(method, include_private)
+      end
+
       protected
         def namespaces
           {'host' => NAMESPACE}
