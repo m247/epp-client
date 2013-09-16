@@ -9,6 +9,8 @@ module EPP
 
         @period_unit = period[-1,1]
         @period_val  = period.to_i.to_s
+        
+        raise ArgumentError, "period suffix must either be 'm' or 'y'" unless %w(m y).include?(@period_unit)
       end
 
       def name
