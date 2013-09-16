@@ -42,7 +42,8 @@ class TestEppDomainInfoResponse < Test::Unit::TestCase
     end
     
     should 'have nameservers' do
-      expected = %w(ns1.example.com ns1.example.net)
+      expected = [ {'name' => 'ns1.example.com'},
+                   {'name' => 'ns1.example.net'} ]
       assert_equal expected, @info_response.nameservers
     end
     

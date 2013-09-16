@@ -7,7 +7,7 @@ module EPP
         @name ||= value_for_xpath('//domain:name')
       end
       def roid
-        @roid ||= value_for_xpath('//domain:roid')        
+        @roid ||= value_for_xpath('//domain:roid')
       end
       def status
         @status ||= value_for_xpath('//domain:status/@s')
@@ -28,8 +28,8 @@ module EPP
               'ipv4' => hostAttr.find('domain:addr[@ip="v4"]').first.content.strip,
               'ipv6' => hostAttr.find('domain:addr[@ip="v6"]').first.content.strip }
           end
-          
-          ns + ns_node.find('domain:hostObj').map { |n| n.content.strip }
+
+          ns + ns_node.find('domain:hostObj').map { |n| { 'name' => n.content.strip } }
         end.flatten
       end
       def hosts
