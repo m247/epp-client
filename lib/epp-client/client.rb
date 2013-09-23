@@ -147,28 +147,6 @@ module EPP
       command(ack)
     end
 
-    # Calls an EPP command after connecting to the EPP Server and logging in.
-    #
-    # @overload method_missing(command, payload, extension)
-    #   @param [String, #to_s] command EPP Command to call
-    #   @param [XML::Node, XML::Document, String] payload EPP XML Payload
-    #   @param [XML::Node, XML::Document, String] extension EPP XML Extension
-    # @overload method_missing(command) { |cmd, ext| payload }
-    #   @param [String, #to_s] command EPP Command to call
-    #   @yield [cmd, ext] block to construct payload
-    #   @yieldparam [XML::Node] cmd XML Node of the command
-    #     for the payload to be added into
-    #   @yieldparam [XML::Node] ext XML Node of the extension block
-    #     for the extension payload to be added into
-    # @return [Response] EPP Response object
-    # def method_missing(command, payload = nil, extension = nil, &block)
-    #   @conn.connection do
-    #     @conn.with_login do
-    #       @conn.request(command, payload, extension, &block)
-    #     end
-    #   end
-    # end
-
     protected
       def command(cmd, extension = nil)
         @conn.connection do
