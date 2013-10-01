@@ -9,9 +9,9 @@ module EPP
       # @option [Hash] :status A Hash of status value to text. Text may optionally be an array in the form ["Text", "lang"] if a custom language value needs to be set.
       def initialize(name, options = {})
         @name = name
-        @add  = options.delete(:add)
-        @rem  = options.delete(:rem)
-        @chg  = options.delete(:chg)
+        @add  = options.delete(:add) || {}
+        @rem  = options.delete(:rem) || {}
+        @chg  = options.delete(:chg) || {}
 
         @add.delete_if { |k,_| !ADD_REM_ORDER.include?(k) }
         @rem.delete_if { |k,_| !ADD_REM_ORDER.include?(k) }
