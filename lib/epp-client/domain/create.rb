@@ -19,8 +19,8 @@ module EPP
         @period = options.delete(:period) || '1y'
         @nameservers = Array(options.delete(:nameservers)) 
         @registrant = options.delete(:registrant)
-        @contacts = Hash(options.delete(:contacts))
-        @auth_info = Hash(options.delete(:auth_info))
+        @contacts = options.delete(:contacts)
+        @auth_info = options.delete(:auth_info)
       end
 
       def name
