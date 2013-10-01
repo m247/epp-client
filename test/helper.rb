@@ -73,8 +73,11 @@ class Test::Unit::TestCase
         yield
       end
 
-      x = assert_equal stdout, out, "In stdout" if stdout
-      y = assert_equal stderr, err, "In stderr" if stderr
+      stdout_matcher = stdout.is_a?(Regexp) ? method(:assert_match) : method(:assert_equal)
+      stderr_matcher = stderr.is_a?(Regexp) ? method(:assert_match) : method(:assert_equal)
+
+      x = stdout_matcher.call(stdout, out, "In stdout") if stdout
+      y = stderr_matcher.call(stderr, err, "In stderr") if stderr
 
       (!stdout || x) && (!stderr || y)
     end
