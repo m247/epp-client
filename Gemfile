@@ -13,5 +13,8 @@ end
 group :test do
   gem 'shoulda'
   gem 'mocha'
+end
+
+group :coverage do
   gem 'simplecov', :platforms => [:ruby_19, :ruby_20, :rbx]
 end

@@ -4,7 +4,11 @@ require 'shoulda'
 require 'mocha/setup'
 
 if RUBY_VERSION >= '1.9'
-  require 'simplecov'
+  begin
+    require 'simplecov'
+  rescue LoadError
+    puts "Coverage results will not be available during this build"
+  end
 end
 
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
