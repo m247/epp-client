@@ -1,7 +1,12 @@
 language: ruby
 bundler_args: --without doc coverage
-rvm:
-  - 1.8.7
-  - 1.9.3
-  - 2.0.0
-  - ree
+matrix:
+  include:
+    - rvm: 1.8.7
+      gemfile: gemfiles/Gemfile.ruby18
+    - rvm: ree
+      gemfile: gemfiles/Gemfile.ruby18
+    - rvm: 1.9.3
+      gemfile: Gemfile
+    - rvm: 2.0.0
+      gemfile: Gemfile
