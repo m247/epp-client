@@ -67,7 +67,7 @@ class Test::Unit::TestCase
     @namespaces = Hash[*request.namespaces.map { |k,ns| [k, ns.href] }.flatten]
   end
   
-  unless method_defined?(:assert_output)
+  unless RUBY_VERSION >= "1.9"
     def assert_output stdout = nil, stderr = nil
       out, err = capture_io do
         yield
