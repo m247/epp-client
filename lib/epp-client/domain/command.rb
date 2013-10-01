@@ -80,6 +80,7 @@ module EPP
           ns
         end
         def contacts_to_xml(node, contacts)
+          return if contacts.nil?
           contacts.each do |type, roid|
             next unless %w(admin tech billing).include?(type.to_s)
             node << c = domain_node('contact', roid)
