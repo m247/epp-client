@@ -66,4 +66,31 @@ class Test::Unit::TestCase
   def namespaces_from_request(request = @request)
     @namespaces = Hash[*request.namespaces.map { |k,ns| [k, ns.href] }.flatten]
   end
+  
+  unless method_defined?(:assert_output)
+    def assert_output stdout = nil, stderr = nil
+      out, err = capture_io do
+        yield
+      end
+
+      x = assert_equal stdout, out, "In stdout" if stdout
+      y = assert_equal stderr, err, "In stderr" if stderr
+
+      (!stdout || x) && (!stderr || y)
+    end
+    def capture_io
+      require 'stringio'
+
+      orig_stdout, orig_stderr         = $stdout, $stderr
+      captured_stdout, captured_stderr = StringIO.new, StringIO.new
+      $stdout, $stderr                 = captured_stdout, captured_stderr
+
+      yield
+
+      return captured_stdout.string, captured_stderr.string
+    ensure
+      $stdout = orig_stdout
+      $stderr = orig_stderr
+    end
+  end
 end
