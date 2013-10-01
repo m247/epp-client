@@ -1,5 +1,6 @@
 require 'openssl'
 require 'socket'
+require 'time'
 require 'xml'
 
 require File.expand_path('../epp-client/version', __FILE__)
