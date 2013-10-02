@@ -42,19 +42,19 @@ module EPP
         @crid ||= value_for_xpath('//domain:crID')
       end
       def created_date
-        @crdate ||= Time.parse(value_for_xpath('//domain:crDate'))
+        @crdate ||= value_for_xpath('//domain:crDate') && Time.parse(value_for_xpath('//domain:crDate'))
       end
       def updator_id
         @upid ||= value_for_xpath('//domain:upID')
       end
       def updated_date
-        @update ||= Time.parse(value_for_xpath('//domain:upDate'))
+        @update ||= value_for_xpath('//domain:upDate') && Time.parse(value_for_xpath('//domain:upDate'))
       end
       def expiration_date
-        @exdate ||= Time.parse(value_for_xpath('//domain:exDate'))
+        @exdate ||= value_for_xpath('//domain:exDate') && Time.parse(value_for_xpath('//domain:exDate'))
       end
       def transfer_date
-        @trdate ||= Time.parse(value_for_xpath('//domain:trDate'))
+        @trdate ||= value_for_xpath('//domain:trDate') && Time.parse(value_for_xpath('//domain:trDate'))
       end
       def auth_info
         @auth_info ||= begin

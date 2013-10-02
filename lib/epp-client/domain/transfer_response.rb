@@ -13,16 +13,16 @@ module EPP
         @reID ||= value_for_xpath('//domain:reID')
       end
       def requested_date
-        @reDate ||= Time.parse(value_for_xpath('//domain:reDate'))
+        @reDate ||= value_for_xpath('//domain:reDate') && Time.parse(value_for_xpath('//domain:reDate'))
       end
       def expiration_date
-        @exDate ||= Time.parse(value_for_xpath('//domain:exDate'))
+        @exDate ||= value_for_xpath('//domain:exDate') && Time.parse(value_for_xpath('//domain:exDate'))
       end
       def action_id
         @acID ||= value_for_xpath('//domain:acID')
       end
       def action_date
-        @acDate ||= Time.parse(value_for_xpath('//domain:acDate'))
+        @acDate ||= value_for_xpath('//domain:acDate') && Time.parse(value_for_xpath('//domain:acDate'))
       end
     end
   end

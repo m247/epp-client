@@ -7,7 +7,7 @@ module EPP
         @id ||= value_for_xpath('//contact:id')
       end
       def creation_date
-        @crdate ||= Time.parse(value_for_xpath('//contact:crDate'))
+        @crdate ||= value_for_xpath('//contact:crDate') && Time.parse(value_for_xpath('//contact:crDate'))
       end
     end
   end

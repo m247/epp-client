@@ -7,7 +7,7 @@ module EPP
         @name ||= value_for_xpath('//domain:name')
       end
       def expiration_date
-        @date ||= Time.parse(value_for_xpath('//domain:exDate'))
+        @date ||= value_for_xpath('//domain:exDate') && Time.parse(value_for_xpath('//domain:exDate'))
       end
     end
   end

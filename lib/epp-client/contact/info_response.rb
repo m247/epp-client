@@ -45,16 +45,16 @@ module EPP
         @crid ||= value_for_xpath('//contact:crID')
       end
       def created_date
-        @crdate ||= Time.parse(value_for_xpath('//contact:crDate'))
+        @crdate ||= value_for_xpath('//contact:crDate') && Time.parse(value_for_xpath('//contact:crDate'))
       end
       def updator_id
         @upid ||= value_for_xpath('//contact:upID')
       end
       def updated_date
-        @update ||= Time.parse(value_for_xpath('//contact:upDate'))
+        @update ||= value_for_xpath('//contact:upDate') && Time.parse(value_for_xpath('//contact:upDate'))
       end
       def transfer_date
-        @trdate ||= Time.parse(value_for_xpath('//contact:trDate'))
+        @trdate ||= value_for_xpath('//contact:trDate') && Time.parse(value_for_xpath('//contact:trDate'))
       end
       def auth_info
         @auth_info ||= begin

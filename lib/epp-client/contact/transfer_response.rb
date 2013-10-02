@@ -13,13 +13,13 @@ module EPP
         @reID ||= value_for_xpath('//contact:reID')
       end
       def requested_date
-        @reDate ||= Time.parse(value_for_xpath('//contact:reDate'))
+        @reDate ||= value_for_xpath('//contact:reDate') && Time.parse(value_for_xpath('//contact:reDate'))
       end
       def action_id
         @acID ||= value_for_xpath('//contact:acID')
       end
       def action_date
-        @acDate ||= Time.parse(value_for_xpath('//contact:acDate'))
+        @acDate ||= value_for_xpath('//contact:acDate') && Time.parse(value_for_xpath('//contact:acDate'))
       end
     end
   end

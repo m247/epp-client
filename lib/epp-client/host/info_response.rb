@@ -26,16 +26,16 @@ module EPP
         @crid ||= value_for_xpath('//host:crID')
       end
       def created_date
-        @crdate ||= Time.parse(value_for_xpath('//host:crDate'))
+        @crdate ||= value_for_xpath('//host:crDate') && Time.parse(value_for_xpath('//host:crDate'))
       end
       def updator_id
         @upid ||= value_for_xpath('//host:upID')
       end
       def updated_date
-        @update ||= Time.parse(value_for_xpath('//host:upDate'))
+        @update ||= value_for_xpath('//host:upDate') && Time.parse(value_for_xpath('//host:upDate'))
       end
       def transfer_date
-        @trdate ||= Time.parse(value_for_xpath('//host:trDate'))
+        @trdate ||= value_for_xpath('//host:trDate') && Time.parse(value_for_xpath('//host:trDate'))
       end
     end
   end

@@ -7,7 +7,7 @@ module EPP
         @name ||= value_for_xpath('//host:name')
       end
       def creation_date
-        @crdate ||= Time.parse(value_for_xpath('//host:crDate'))
+        @crdate ||= value_for_xpath('//host:crDate') && Time.parse(value_for_xpath('//host:crDate'))
       end
     end
   end

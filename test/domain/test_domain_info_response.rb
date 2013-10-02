@@ -92,5 +92,16 @@ class TestEppDomainInfoResponse < Test::Unit::TestCase
       expected = { 'pw' => '2fooBAR' }
       assert_equal expected, @info_response.auth_info
     end
+
+    context 'no expiration_date' do
+      setup do
+        @response = EPP::Response.new(load_xml('domain/info-no-exDate'))
+        @info_response = EPP::Domain::InfoResponse.new(@response)
+      end
+
+      should 'have nil for expiration_date' do
+        assert_nil @info_response.expiration_date
+      end
+    end
   end
 end
