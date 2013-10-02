@@ -4,25 +4,25 @@ module EPP
   module Domain
     class TransferResponse < Response
       def name
-        @name ||= @response.data.find('//domain:name').first.content.strip
+        @name ||= value_for_xpath('//domain:name')
       end
       def status
-        @trStatus ||= @response.data.find('//domain:trStatus').first.content.strip
+        @trStatus ||= value_for_xpath('//domain:trStatus')
       end
       def requested_id
-        @reID ||= @response.data.find('//domain:reID').first.content.strip
+        @reID ||= value_for_xpath('//domain:reID')
       end
       def requested_date
-        @reDate ||= Time.parse(@response.data.find('//domain:reDate').first.content.strip)
+        @reDate ||= Time.parse(value_for_xpath('//domain:reDate'))
       end
       def expiration_date
-        @exDate ||= Time.parse(@response.data.find('//domain:exDate').first.content.strip)
+        @exDate ||= Time.parse(value_for_xpath('//domain:exDate'))
       end
       def action_id
-        @acID ||= @response.data.find('//domain:acID').first.content.strip
+        @acID ||= value_for_xpath('//domain:acID')
       end
       def action_date
-        @acDate ||= Time.parse(@response.data.find('//domain:acDate').first.content.strip)
+        @acDate ||= Time.parse(value_for_xpath('//domain:acDate'))
       end
     end
   end

@@ -4,10 +4,10 @@ module EPP
   module Domain
     class RenewResponse < Response
       def name
-        @name ||= @response.data.find('//domain:name', namespaces).first.content.strip
+        @name ||= value_for_xpath('//domain:name')
       end
       def expiration_date
-        @date ||= Time.parse(@response.data.find('//domain:exDate', namespaces).first.content.strip)
+        @date ||= Time.parse(value_for_xpath('//domain:exDate'))
       end
     end
   end
