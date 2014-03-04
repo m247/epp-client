@@ -52,6 +52,7 @@ module EPP
     # @param [String] host EPP Server address
     # @param [Hash] options configuration options
     # @option options [Integer] :port EPP Port number, default 700
+    # @option options [OpenSSL::SSL::SSLContext] :ssl_context For client certificate auth
     # @option options [Boolean] :compatibility Compatibility mode, default false
     # @option options [String] :lang EPP Language code, default 'en'
     # @option options [String] :version EPP protocol version, default '1.0'
@@ -60,6 +61,7 @@ module EPP
     # @option options [String] :address_family 'AF_INET' or 'AF_INET6' or either of the
     #                          appropriate socket constants. Will cause connections to be
     #                          limited to this address family. Default try all addresses.
+
     def initialize(tag, passwd, host, options = {})
       @tag, @passwd, @host = tag, passwd, host
       @options = DEFAULTS.merge(options)
@@ -192,7 +194,9 @@ module EPP
           retry
         end
 
-        @sock = OpenSSL::SSL::SSLSocket.new(@conn)
+        args = [@conn]
+        args << options[:ssl_context] if options[:ssl_context]
+        @sock = OpenSSL::SSL::SSLSocket.new(*args)
         @sock.sync_close = true
 
         begin
@@ -317,7 +321,7 @@ module EPP
           len = header.unpack('N')[0]
 
           raise ServerError, "Bad frame header from server, should be greater than #{HEADER_LEN}" unless len > HEADER_LEN
-          response = @sock.read(len - HEADER_LEN)
+          @sock.read(len - HEADER_LEN)
         end
       end
   end

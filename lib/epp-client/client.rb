@@ -21,6 +21,7 @@ module EPP
     # @param [String] host EPP Host address
     # @param [Hash] options Options
     # @option options [Integer] :port EPP Port number, default 700
+    # @option options [OpenSSL::SSL::SSLContext] :ssl_context For client certificate auth
     # @option options [Boolean] :compatibility Compatibility mode, default false
     # @option options [String] :lang EPP Language code, default 'en'
     # @option options [String] :version EPP protocol version, default '1.0'
@@ -29,6 +30,7 @@ module EPP
     # @option options [String] :address_family 'AF_INET' or 'AF_INET6' or either of the
     #                          appropriate socket constants. Will cause connections to be
     #                          limited to this address family. Default try all addresses.
+
     def initialize(tag, passwd, host, options = {})
       @tag, @passwd, @host, @options = tag, passwd, host, options
       @conn = if options.delete(:compatibility) == true

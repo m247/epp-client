@@ -26,6 +26,16 @@ class TestEppServer < Test::Unit::TestCase
   
         assert_equal 7001, server.options[:port]
       end
+
+      should 'allow configuration of SSL context' do
+        server = nil
+        ctx = OpenSSL::SSL::SSLContext.new
+        assert_nothing_raised do
+          server = EPP::Server.new('TEST', 'test', 'epp.test.host', :ssl_context => ctx)
+        end
+
+        assert_equal ctx, server.options[:ssl_context]
+      end
   
       should 'allow configuration of language' do
         server = EPP::Server.new('TEST', 'test', 'epp.test.host', :lang => 'no')
