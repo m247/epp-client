@@ -1,7 +1,4 @@
 require 'rubygems'
-require 'test/unit'
-require 'shoulda'
-require 'mocha/setup'
 
 if RUBY_VERSION >= '1.9'
   begin
@@ -10,6 +7,10 @@ if RUBY_VERSION >= '1.9'
     puts "Coverage results will not be available during this build"
   end
 end
+
+require 'test/unit'
+require 'shoulda'
+require 'mocha/setup'
 
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 $LOAD_PATH.unshift(File.dirname(__FILE__))
@@ -66,7 +67,7 @@ class Test::Unit::TestCase
   def namespaces_from_request(request = @request)
     @namespaces = Hash[*request.namespaces.map { |k,ns| [k, ns.href] }.flatten]
   end
-  
+
   unless RUBY_VERSION >= "1.9"
     def assert_output stdout = nil, stderr = nil
       out, err = capture_io do
