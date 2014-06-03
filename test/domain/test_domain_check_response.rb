@@ -20,6 +20,15 @@ class TestEppDomainCheckResponse < Test::Unit::TestCase
       assert_equal 'Command completed successfully', @check_response.message
     end
 
+    should 'have names' do
+      assert_equal ['example.com', 'example.net', 'example.org'],
+        @check_response.names
+    end
+
+    should 'have count' do
+      assert_equal 3, @check_response.count
+    end
+
     should 'list example.com as available' do
       assert @check_response.available?('example.com')
       assert !@check_response.unavailable?('example.com')
@@ -33,6 +42,47 @@ class TestEppDomainCheckResponse < Test::Unit::TestCase
     should 'list example.org as available' do
       assert @check_response.available?('example.org')
       assert !@check_response.unavailable?('example.org')
+    end
+
+    should 'raise ArgumentError if available with no argument for count > 1' do
+      assert_raise ArgumentError do
+        @check_response.available?
+      end
+    end
+
+    should 'raise RuntimeError if name called with count > 1' do
+      assert_raise RuntimeError do
+        @check_response.name
+      end
+    end
+  end
+
+  context 'EPP::Domain::CheckResponse Single Query' do
+    setup do
+      @response = EPP::Response.new(load_xml('domain/check-single'))
+      @check_response = EPP::Domain::CheckResponse.new(@response)
+    end
+
+    should 'have names' do
+      assert_equal ['example.com'], @check_response.names
+    end
+
+    should 'have name' do
+      assert_equal 'example.com', @check_response.name
+    end
+
+    should 'have count' do
+      assert_equal 1, @check_response.count
+    end
+
+    should 'list example.com as available' do
+      assert @check_response.available?('example.com')
+      assert !@check_response.unavailable?('example.com')
+    end
+
+    should 'be available? with no argument' do
+      assert @check_response.available?
+      assert !@check_response.unavailable?
     end
   end
 end
