@@ -1,5 +1,7 @@
 # EPP Client
 
+[![Build Status](https://travis-ci.org/m247/epp-client.svg?branch=master)](https://travis-ci.org/m247/epp-client)
+
 Client for communicating with EPP services
 
 ## Installation
