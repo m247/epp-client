@@ -21,8 +21,8 @@ class TestEppContactCheckResponse < Test::Unit::TestCase
     end
 
     should 'have ids' do
-      assert_equal ['sh8013', 'sah8013', '8013sah'],
-        @check_response.ids
+      expected = ['sh8013', 'sah8013', '8013sah'].sort
+      assert_equal expected, @check_response.ids.sort
     end
 
     should 'have count' do

@@ -21,8 +21,8 @@ class TestEppDomainCheckResponse < Test::Unit::TestCase
     end
 
     should 'have names' do
-      assert_equal ['example.com', 'example.net', 'example.org'],
-        @check_response.names
+      expected = ['example.com', 'example.net', 'example.org'].sort
+      assert_equal expected, @check_response.names.sort
     end
 
     should 'have count' do

@@ -21,8 +21,8 @@ class TestEppHostCheckResponse < Test::Unit::TestCase
     end
 
     should 'have names' do
-      assert_equal ['ns1.example.com', 'ns2.example2.com', 'ns3.example3.com'],
-        @check_response.names
+      expected = ['ns1.example.com', 'ns2.example2.com', 'ns3.example3.com'].sort
+      assert_equal expected, @check_response.names.sort
     end
 
     should 'have count' do
