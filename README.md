@@ -22,51 +22,48 @@ Or install it yourself as:
 
     client = EPP::Client.new('username', 'password', 'epp.server.com')
     client.hello
-    puts client._last_request.inspect
-    puts client._last_response.inspect
+    puts client.last_request.to_s(:indent => 2)
+    puts client.last_response.to_s(:indent => 2)
 
-Any other methods called on `client` will be passed through to an
-authenticated EPP server connection. As a quick example, either a
-string of XML, an XML::Node or XML::Document can be passed or a
-block may be used
+The old `method_missing` behaviour has been removed and replaced with defined
+methods for handling each of the distinct EPP commands.
 
-### domain:check using string payload
+* `check`
+* `create`
+* `delete`
+* `info`
+* `renew`
+* `transfer`
+* `update`
+* `poll`
+* `ack`
 
-    client.check <<-EOXML
-      <domain:check
-       xmlns:domain="urn:ietf:params:xml:ns:domain-1.0">
-        <domain:name>example.com</domain:name>
-        <domain:name>example.net</domain:name>
-        <domain:name>example.org</domain:name>
-      </domain:check>
-    EOXML
+each of these methods, with the exception of `poll` and `ack`, accept two arguments.
+Those arguments are a `payload` and an optional `extension`. The majority of the
+common `domain`, `contact` and `host` payloads have been defined already.
 
-### domain:check using XML::Node payload
+### Domain Check Example
 
-    xml = XML::Node.new('check')
-    ns = XML::Namespace.new(xml, 'domain', 'urn:ietf:params:xml:ns:domain-1.0')
-    xml.namespaces.namespace = ns
+    resp = client.check EPP::Domain::Check.new('example.com', 'example.net', 'example.org')
+    resp.available?('example.com') #=> true
+    resp.available?('example.net') #=> false
+    resp.available?('example.org') #=> false
 
-    %w(example.com example.net example.org).each do |name|
-      xml << XML::Node.new('name', name, ns)
-    end
+### Domain Information Example
 
-    client.check xml
+    resp = client.info EPP::Domain::Info.new('example.com')
+    resp.name #=> "example.com"
+    resp.nameservers #=> [{"name"=>"ns1.example.net"},{"name"=>"ns2.example.net"}]
 
-### domain:check using block
+### Payload an Extension API
 
-    client.check do |xml|
-      xml << (check = XML::Node.new('check'))
-      ns = XML::Namespace.new(check, 'domain', 'urn:ietf:params:xml:ns:domain-1.0')
-      check.namespaces.namespace = ns
+The objects which are passed to the `client` methods need to adhere to the following
+API in order to be successfully marshalled by the `client` into the required XML
+document.
 
-      %w(example.com example.net example.org).each do |name|
-        check << XML::Node.new('name', name, ns)
-      end
-    end
-
-If you leave off the block parameter then the return value of the block will be
-inserted into the `xml`.
+* `name` to specify the EPP command name. Required.
+* `to_xml` returns an `XML::Document`. Required.
+* `set_namespaces` to receive `XML::Namespace` objects from the parent. Optional.
 
 ## Contributing
 
