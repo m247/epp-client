@@ -44,16 +44,18 @@ common `domain`, `contact` and `host` payloads have been defined already.
 
 ### Domain Check Example
 
-    resp = client.check EPP::Domain::Check.new('example.com', 'example.net', 'example.org')
-    resp.available?('example.com') #=> true
-    resp.available?('example.net') #=> false
-    resp.available?('example.org') #=> false
+    resp  = client.check EPP::Domain::Check.new('example.com', 'example.net', 'example.org')
+    check = EPP::Domain::CheckResponse.new(resp)
+    check.available?('example.com') #=> true
+    check.available?('example.net') #=> false
+    check.available?('example.org') #=> false
 
 ### Domain Information Example
 
     resp = client.info EPP::Domain::Info.new('example.com')
-    resp.name #=> "example.com"
-    resp.nameservers #=> [{"name"=>"ns1.example.net"},{"name"=>"ns2.example.net"}]
+    info = EPP::Domain::InfoResponse.new(resp)
+    info.name #=> "example.com"
+    info.nameservers #=> [{"name"=>"ns1.example.net"},{"name"=>"ns2.example.net"}]
 
 ### Payload an Extension API
 
