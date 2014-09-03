@@ -10,6 +10,7 @@
         <domain:name>example.com</domain:name>
         <domain:roid>EXAMPLE1-REP</domain:roid>
         <domain:status s="ok"/>
+        <domain:status s="clientTransferProhibited"/>
         <domain:registrant>jd1234</domain:registrant>
         <domain:contact type="admin">sh8013</domain:contact>
         <domain:contact type="tech">sh8013</domain:contact>
