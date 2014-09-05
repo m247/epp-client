@@ -24,9 +24,9 @@ module EPP
       def nameservers
         @nameservers ||= nodes_for_xpath('//domain:ns').map do |ns_node|
           ns = ns_node.find('domain:hostAttr', namespaces).map do |hostAttr|
-            { 'name' => hostAttr.find('domain:name').first.content.strip,
-              'ipv4' => hostAttr.find('domain:addr[@ip="v4"]').first.content.strip,
-              'ipv6' => hostAttr.find('domain:addr[@ip="v6"]').first.content.strip }
+            { 'name' => hostAttr.find('domain:hostName').first.content.strip,
+              'ipv4' => hostAttr.find('domain:hostAddr[@ip="v4"]').first.content.strip,
+              'ipv6' => hostAttr.find('domain:hostAddr[@ip="v6"]').first.content.strip }
           end
 
           ns + ns_node.find('domain:hostObj').map { |n| { 'name' => n.content.strip } }
