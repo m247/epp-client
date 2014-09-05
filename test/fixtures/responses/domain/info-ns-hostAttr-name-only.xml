@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
+  <response>
+    <result code="1000">
+      <msg>Command completed successfully</msg>
+    </result>
+    <resData>
+      <domain:infData xmlns:domain="urn:ietf:params:xml:ns:domain-1.0">
+        <domain:name>example-1409820378.io</domain:name>
+        <domain:roid>DOM-123456</domain:roid>
+        <domain:status s="ok"/>
+        <domain:registrant>T-qZtDtfraZ0Z</domain:registrant>
+        <domain:contact type="admin">T-qZtDtfraZ0Z</domain:contact>
+        <domain:contact type="tech">T-qZtDtfraZ0Z</domain:contact>
+        <domain:contact type="billing">T-qZtDtfraZ0Z</domain:contact>
+        <domain:ns>
+          <domain:hostAttr>
+            <domain:hostName>ns1.example.com</domain:hostName>
+          </domain:hostAttr>
+          <domain:hostAttr>
+            <domain:hostName>ns2.example.com</domain:hostName>
+          </domain:hostAttr>
+        </domain:ns>
+        <domain:clID>NIC-1234</domain:clID>
+        <domain:crDate>2014-09-04T08:46:22.0Z</domain:crDate>
+        <domain:exDate>2015-09-04T08:46:22.0Z</domain:exDate>
+      </domain:infData>
+    </resData>
+    <trID>
+      <clTRID>NIC-1234-20140904000001</clTRID>
+      <svTRID>EPP-00A1.000000E1.2</svTRID>
+    </trID>
+  </response>
+</epp>

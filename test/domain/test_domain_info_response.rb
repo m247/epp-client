@@ -105,25 +105,41 @@ class TestEppDomainInfoResponse < Test::Unit::TestCase
     end
 
     context 'nameserver data specified inside <hostAttr>' do
-      setup do
-        @response = EPP::Response.new(load_xml('domain/info-ns-hostAttr'))
-        @info_response = EPP::Domain::InfoResponse.new(@response)
+      context 'with name, ipv4 and ipv6' do
+        setup do
+          @response = EPP::Response.new(load_xml('domain/info-ns-hostAttr'))
+          @info_response = EPP::Domain::InfoResponse.new(@response)
+        end
+
+        should 'have nameservers' do
+          expected = [
+                       {
+                         'name' => 'ns1.example.com',
+                         'ipv4' => '192.0.2.1',
+                         'ipv6' => '2002:0:0:0:0:0:C000:201'
+                       },
+                       {
+                         'name' => 'ns2.example.com',
+                         'ipv4' => '192.0.2.2',
+                         'ipv6' => '1080:0:0:0:8:800:200C:417A'
+                       }
+                     ]
+          assert_equal expected, @info_response.nameservers
+        end
       end
 
-      should 'have nameservers' do
-        expected = [
-                     {
-                       'name' => 'ns1.example.com',
-                       'ipv4' => '192.0.2.1',
-                       'ipv6' => '2002:0:0:0:0:0:C000:201'
-                     },
-                     {
-                       'name' => 'ns2.example.com',
-                       'ipv4' => '192.0.2.2',
-                       'ipv6' => '1080:0:0:0:8:800:200C:417A'
-                     }
-                   ]
-        assert_equal expected, @info_response.nameservers
+      context 'with name only' do
+        setup do
+          @response = EPP::Response.new(load_xml('domain/info-ns-hostAttr-name-only'))
+          @info_response = EPP::Domain::InfoResponse.new(@response)
+        end
+
+        should 'have nameservers' do
+          expected = [ { 'name' => 'ns1.example.com' },
+                       { 'name' => 'ns2.example.com' }
+                     ]
+          assert_equal expected, @info_response.nameservers
+        end
       end
     end
   end
