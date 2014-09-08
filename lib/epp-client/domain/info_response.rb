@@ -16,8 +16,9 @@ module EPP
         @registrant ||= value_for_xpath('//domain:registrant')
       end
       def contacts
-        @contacts ||= nodes_for_xpath('//domain:contact').each_with_object({}) do |node, hash|
+        @contacts ||= nodes_for_xpath('//domain:contact').inject({}) do |hash, node|
           hash[node['type'].to_s] = node.content.strip
+          hash
         end
       end
       def nameservers
