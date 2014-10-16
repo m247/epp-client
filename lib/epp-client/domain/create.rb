@@ -17,7 +17,7 @@ module EPP
       def initialize(name, options = {})
         @name = name
         @period = options.delete(:period) || '1y'
-        @nameservers = Array(options.delete(:nameservers)) 
+        @nameservers = Array(options.delete(:nameservers))
         @registrant = options.delete(:registrant)
         @contacts = options.delete(:contacts)
         @auth_info = options.delete(:auth_info)
@@ -41,7 +41,7 @@ module EPP
         contacts_to_xml(node, @contacts)
 
         node << auth_info_to_xml(@auth_info) unless @auth_info.empty?
-        
+
         node
       end
     end
