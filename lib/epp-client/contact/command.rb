@@ -5,6 +5,15 @@ module EPP
       attr_reader :namespaces
 
       DISCLOSE_ORDER = ['name', 'org', 'addr', 'voice', 'fax', 'email']
+      MAX_STREETS = 3
+
+      class TooManyStreetLines < RuntimeError
+        attr_reader :streets
+        def initialize(streets)
+          super("too many streets, #{streets[MAX_STREETS..-1]} would be excluded")
+          @streets = streets
+        end
+      end
 
       def set_namespaces(namespaces)
         @namespaces = namespaces
@@ -48,7 +57,17 @@ module EPP
         def addr_to_xml(addr)
           node = contact_node('addr')
 
-          node << contact_node('street', addr[:street]) if addr[:street]
+          if addr[:street]
+            streets = addr[:street].split("\n")
+            if streets.count > MAX_STREETS
+              raise TooManyStreetLines.new(streets)
+            end
+            
+            streets.each do |street|
+              node << contact_node('street', street)
+            end
+          end
+
           node << contact_node('city', addr[:city])
           node << contact_node('sp', addr[:sp]) if addr[:sp]
           node << contact_node('pc', addr[:pc]) if addr[:pc]

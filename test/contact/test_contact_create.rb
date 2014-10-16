@@ -10,7 +10,7 @@ class TestEppContactCreateCommand < Test::Unit::TestCase
           :org       => "Epiphyte",
           :name      => "Enoch Root",
           :addr      => {
-            :street  => "1 Test Avenue",
+            :street  => "Test Suite\n1 Test Avenue",
             :city    => "Testington",
             :sp      => "Testshire",
             :pc      => "TE57 1NG",
@@ -51,7 +51,8 @@ class TestEppContactCreateCommand < Test::Unit::TestCase
       assert_equal "Enoch Root", xpath_find('//contact:postalInfo[@type="loc"]/contact:name')
     end
     should 'set address' do
-      assert_equal "1 Test Avenue", xpath_find('//contact:postalInfo[@type="loc"]/contact:addr/contact:street')
+      assert_equal "Test Suite", xpath_find('//contact:postalInfo[@type="loc"]/contact:addr/contact:street[1]')
+      assert_equal "1 Test Avenue", xpath_find('//contact:postalInfo[@type="loc"]/contact:addr/contact:street[2]')
       assert_equal "Testington", xpath_find('//contact:postalInfo[@type="loc"]/contact:addr/contact:city')
       assert_equal "Testshire", xpath_find('//contact:postalInfo[@type="loc"]/contact:addr/contact:sp')
       assert_equal "TE57 1NG", xpath_find('//contact:postalInfo[@type="loc"]/contact:addr/contact:pc')
