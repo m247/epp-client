@@ -18,6 +18,12 @@ Or install it yourself as:
 
     $ gem install epp-client
 
+## Version 2.0.0
+
+The version has been bumped to 2.0.0 due to the introduction of a backwards incompatible change.
+
+* `EPP::Domain::InfoResponse#status` now returns an array of statuses as part of m247/epp-client#7.
+
 ## Usage
 
     client = EPP::Client.new('username', 'password', 'epp.server.com')
