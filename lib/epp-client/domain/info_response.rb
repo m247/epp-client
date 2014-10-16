@@ -10,7 +10,7 @@ module EPP
         @roid ||= value_for_xpath('//domain:roid')
       end
       def status
-        @status ||= value_for_xpath('//domain:status/@s')
+        @status ||= values_for_xpath('//domain:status/@s')
       end
       def registrant
         @registrant ||= value_for_xpath('//domain:registrant')

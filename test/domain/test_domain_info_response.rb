@@ -29,7 +29,7 @@ class TestEppDomainInfoResponse < Test::Unit::TestCase
     end
 
     should 'have status' do
-      assert_equal 'ok', @info_response.status
+      assert_equal ['ok', 'clientTransferProhibited'], @info_response.status
     end
     
     should 'have registrant' do
