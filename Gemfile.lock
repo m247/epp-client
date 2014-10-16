@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    epp-client (1.0.0)
+    epp-client (2.0.0)
       libxml-ruby
 
 GEM
