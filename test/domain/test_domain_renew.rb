@@ -36,4 +36,56 @@ class TestEppDomainRenewCommand < Test::Unit::TestCase
       assert_equal 'm', xpath_find('//domain:period/@unit')
     end
   end
+  
+  # Outside context for Ruby 1.8
+  def renew_period(period)
+    EPP::Domain::Renew.new('example.com', Time.now, period)
+  end
+  context 'EPP::Domain::Renew period' do
+    should 'accept 1m' do
+      assert_nothing_raised do
+        renew_period '1m'
+      end
+    end
+    should 'accept 1y' do
+      assert_nothing_raised do
+        renew_period '1m'
+      end
+    end
+    should 'accept 99m' do
+      assert_nothing_raised do
+        renew_period '1m'
+      end
+    end
+    should 'accept 99y' do
+      assert_nothing_raised do
+        renew_period '1m'
+      end
+    end
+    should 'reject 0m' do
+      assert_raises ArgumentError do
+        renew_period '0m'
+      end
+    end
+    should 'reject 100m' do
+      assert_raises ArgumentError do
+        renew_period '100m'
+      end
+    end
+    should 'reject 0y' do
+      assert_raises ArgumentError do
+        renew_period '0y'
+      end
+    end
+    should 'reject 100y' do
+      assert_raises ArgumentError do
+        renew_period '100y'
+      end
+    end
+    should 'reject 12c' do
+      assert_raises ArgumentError do
+        renew_period '12c'
+      end
+    end
+  end  
 end

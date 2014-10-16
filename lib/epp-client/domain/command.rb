@@ -32,15 +32,15 @@ module EPP
           return @namespaces['domain'] if @namespaces.has_key?('domain')
           @namespaces['domain'] = xml_namespace(node, 'domain', NAMESPACE)
         end
-
-        def period_to_xml(period)
-          unit = period[-1,1]
-          val  = period.to_i.to_s
-
-          p = domain_node('period', val)
-          p['unit'] = unit
-
-          p
+        
+        def validate_period(period)
+          unit = period[-1,1].downcase
+          val  = period.to_i
+          
+          raise ArgumentError, "period suffix must either be 'm' or 'y'" unless %w(m y).include?(unit)
+          raise ArgumentError, "period value must be in the range 1-99" if val < 1 || val > 99
+          
+          return val.to_s, unit
         end
 
         def auth_info_to_xml(auth_info)

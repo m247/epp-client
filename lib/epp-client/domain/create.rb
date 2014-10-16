@@ -21,6 +21,8 @@ module EPP
         @registrant = options.delete(:registrant)
         @contacts = options.delete(:contacts)
         @auth_info = options.delete(:auth_info)
+
+        @period_val, @period_unit = validate_period(@period)
       end
 
       def name
@@ -30,7 +32,13 @@ module EPP
       def to_xml
         node = super
         node << domain_node('name', @name)
-        node << period_to_xml(@period) if @period
+
+        if @period_val && @period_unit
+          p = domain_node('period', @period_val)
+          p['unit'] = @period_unit
+
+          node << p
+        end
 
         unless @nameservers.empty?
           node << nameservers_to_xml(@nameservers)
