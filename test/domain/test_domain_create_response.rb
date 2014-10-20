@@ -36,4 +36,35 @@ class TestEppDomainCreateResponse < Test::Unit::TestCase
       assert_equal expected, @create_response.expiration_date
     end
   end
+  context 'EPP::Domain::CreateResponse (pending)' do
+    setup do
+      @response = EPP::Response.new(load_xml('domain/create-pending'))
+      @create_response = EPP::Domain::CreateResponse.new(@response)
+    end
+
+    should 'proxy methods to @response' do
+      assert_equal @response.message, @create_response.message
+    end
+
+    should 'be pending' do
+      assert @create_response.pending?
+      assert_equal 1001, @create_response.code
+    end
+
+    should 'have message' do
+      assert_equal 'Command completed successfully; action pending', @create_response.message
+    end
+
+    should 'not have name example.com' do
+      assert_nil @create_response.name
+    end
+
+    should 'not have new creation date' do
+      assert_nil @create_response.creation_date
+    end
+
+    should 'not have new expiration date' do
+      assert_nil @create_response.expiration_date
+    end
+  end  
 end
