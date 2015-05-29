@@ -187,7 +187,9 @@ module EPP
         rescue Errno::EINVAL => e
           if retried
             message = e.message.split(" - ")[1]
-            raise Errno::EINVAL, "#{message}: TCPSocket.new(#{addr.inspect}, #{port.inspect})"
+            @connection_errors << Errno::EINVAL.new(
+              "#{message}: TCPSocket.new(#{addr.inspect}, #{port.inspect})")
+            next
           end
 
           retried = true
